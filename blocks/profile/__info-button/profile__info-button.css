@@ -7,7 +7,7 @@
   margin-left: 18px;
   /* margin-left: auto; */
   border: 1px solid #fff;
-  background-color: #000;
+  background: url('../../../images/icons/edit.svg') center center/10px 10px no-repeat #000;
 }
 
 @media screen and (max-width: 424px) {
@@ -17,5 +17,6 @@
     top: 8px;
     right: -28px;
     margin-left: 10px;
+    background-size: 7px 7px;
   }
 }

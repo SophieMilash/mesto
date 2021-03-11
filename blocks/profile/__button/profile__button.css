@@ -4,7 +4,7 @@
   height: 50px;
   border: 2px solid #fff;
   border-radius: 2px;
-  background-color: #000;
+  background: url('../../../images/icons/plus.svg') center center/22px 22px no-repeat #000;
 }
 
 @media screen and (max-width: 767px) {
@@ -17,5 +17,6 @@
 @media screen and (max-width: 424px) {
   .profile__button {
     width: 228px;
+    background-size: 16px 16px;
   }
 }
