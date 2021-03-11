@@ -1,0 +1,14 @@
+.header__divider {
+  margin-top: 41px;
+  width: 100%;
+  height: 1px;
+  background-color: #545454;
+  opacity: .7;
+}
+
+@media screen and (max-width: 767px) {
+  .header__divider {
+    margin-top: 31px;
+  }
+}
+
