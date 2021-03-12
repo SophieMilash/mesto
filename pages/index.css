@@ -7,6 +7,7 @@
 @import url('../blocks/section/__header/section__header.css');
 @import url('../blocks/section/__profile/section__profile.css');
 @import url('../blocks/section/__cards/section__cards.css');
+@import url('../blocks/section/__footer/section__footer.css');
 
 @import url('../blocks');
 
@@ -30,3 +31,5 @@
 @import url('../blocks/card/__info/card__info.css');
 @import url('../blocks/card/__title/card__title.css');
 @import url('../blocks/card/__button/card__button.css');
+
+@import url('../blocks/footer/__copyright/footer__copyright.css');
