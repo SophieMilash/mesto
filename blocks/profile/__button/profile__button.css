@@ -4,7 +4,7 @@
   height: 50px;
   border: 2px solid #fff;
   border-radius: 2px;
-  background: url('../../../images/icons/plus.svg') center center/22px 22px no-repeat #000;
+  background: url('../../../images/icons/plus.svg') center center/22px 22px no-repeat transparent;
 }
 
 @media screen and (max-width: 767px) {
