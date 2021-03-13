@@ -20,7 +20,6 @@ popupOverlay.addEventListener('click', closePopup);
 let formElement = document.querySelector('.form');
 let nameInput = formElement.querySelector('.form__item_type_name');
 let activityInput = formElement.querySelector('.form__item_type_activity');
-let formSubmitBtn = formElement.querySelector('.button_action_save');
 
 function formSubmitHandler (evt) {
   evt.preventDefault();
