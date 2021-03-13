@@ -9,8 +9,6 @@
 @import url('../blocks/section/__cards/section__cards.css');
 @import url('../blocks/section/__footer/section__footer.css');
 
-@import url('../blocks');
-
 @import url('../blocks/header/header.css');
 @import url('../blocks/header/__logo/header__logo.css');
 @import url('../blocks/header/__divider/header__divider.css');
@@ -38,7 +36,7 @@
 @import url('../blocks/popup/__overlay/popup__overlay.css');
 @import url('../blocks/popup/__container/popup__container.css');
 @import url('../blocks/popup/__close-button/popup__close-button.css');
-@import url('../blocks/popup/_visible/popup_visible.css');
+@import url('../blocks/popup/_opened/popup_opened.css');
 
 @import url('../blocks/form/__profile-info/form__profile-info.css');
 @import url('../blocks/form/__title/form__title.css');
