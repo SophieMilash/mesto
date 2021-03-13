@@ -1,10 +1,6 @@
 .profile__info {
   max-width: 336px;
   margin-left: 30px;
-  /* display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start;
-  align-items: center; */
   position: relative;
 }
 

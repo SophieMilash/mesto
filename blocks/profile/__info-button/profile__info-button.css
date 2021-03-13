@@ -4,7 +4,6 @@
   position: absolute;
   top: 15px;
   right: -43px;
-  /* margin-left: auto; */
   border: 1px solid #fff;
   background: url('../../../images/icons/edit.svg') center center/10px 10px no-repeat transparent;
 }
