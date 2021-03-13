@@ -1,0 +1,15 @@
+.section__header {
+  margin-top: 45px;
+}
+
+@media screen and (max-width: 767px) {
+  .section__header {
+    margin-top: 28px;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .section__header {
+    width: 100%;
+  }
+}

@@ -1,0 +1,20 @@
+.profile__info-button {
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  top: 15px;
+  right: -43px;
+  border: 1px solid #fff;
+  background: url('../../../images/icons/edit.svg') center center/10px 10px no-repeat transparent;
+}
+
+@media screen and (max-width: 424px) {
+  .profile__info-button {
+    width: 18px;
+    height: 18px;
+    top: 8px;
+    right: -28px;
+    margin-left: 10px;
+    background-size: 7px 7px;
+  }
+}

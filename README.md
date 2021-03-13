@@ -13,7 +13,4 @@
 
 
 **GitHub Pages**
-
-* [Ссылка на GitHub Pages]()
-
-
+* [Ссылка на GitHub Pages](https://sophiemilash.github.io/mesto/)
