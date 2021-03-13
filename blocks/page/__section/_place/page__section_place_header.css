@@ -1,15 +1,15 @@
-.section__header {
+.page__section_place_header {
   margin-top: 45px;
 }
 
 @media screen and (max-width: 767px) {
-  .section__header {
+  .page__section_place_header {
     margin-top: 28px;
   }
 }
 
 @media screen and (max-width: 575px) {
-  .section__header {
+  .page__section_place_header {
     width: 100%;
   }
 }
