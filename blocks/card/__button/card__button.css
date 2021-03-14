@@ -5,6 +5,10 @@
   border: none;
 }
 
+.card__button:hover {
+  opacity: .5;
+}
+
 .card__button:active {
   background-image: url('../../../images/icons/like-active.svg');
 }

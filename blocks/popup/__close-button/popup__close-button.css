@@ -1,6 +1,9 @@
 .popup__close-button {
   width: 40px;
+  height: 40px;
+  background: url('../../../images/icons/plus.svg') center center/contain no-repeat;
   transform: rotate(45deg);
+  border: none;
   position: absolute;
   top: -40px;
   right: -40px;
@@ -9,6 +12,7 @@
 @media screen and (max-width: 575px) {
   .popup__close-button {
     width: 26px;
+    height: 26px;
     top: -45px;
     right: 5px;
   }
