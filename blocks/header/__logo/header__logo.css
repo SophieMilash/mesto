@@ -1,5 +1,6 @@
 .header__logo {
   width: 142px;
+  margin-bottom: 38px;
   transition: .2s linear;
 }
 
@@ -10,6 +11,7 @@
 @media screen and (max-width: 767px) {
   .header__logo {
     width: 104px;
+    margin-bottom: 29px;
   }
 }
 
