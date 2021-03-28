@@ -101,6 +101,7 @@ function insertCard(item) {
 initialCards.forEach(insertCard);
 
 // добавление карточек с последующим закрытием попапа (addCardPopup)
+  // поля ввода обнуляются после закрытия
 function addCardFormSubmitHandler (evt) {
   evt.preventDefault();
 
@@ -108,6 +109,8 @@ function addCardFormSubmitHandler (evt) {
     name: titleInput.value,
     link: linkInput.value
   });
+  titleInput.value = '';
+  linkInput.value = '';
   togglePopup(addCardPopup);
 }
 
@@ -123,12 +126,8 @@ editForm.addEventListener('submit', editFormSubmitHandler);
 
 // открытие / закрытие addCardPopup
 openAddCardPopupBtn.addEventListener('click', () => togglePopup(addCardPopup));
-  // поля обнуляются после закрытия
-closeAddCardPopupBtn.addEventListener('click', () => {
-  togglePopup(addCardPopup);
-  titleInput.value = '';
-  linkInput.value = '';
-});
+closeAddCardPopupBtn.addEventListener('click', () => togglePopup(addCardPopup));
 addCardForm.addEventListener('submit', addCardFormSubmitHandler);
 
+// закрытие imagePopup
 closeImagePopupBtn.addEventListener('click', () => togglePopup(imagePopup));
