@@ -1,5 +1,4 @@
 // попапы
-const popup = document.querySelector('.popup');
 const editPopup = document.querySelector('.popup_type_edit');
 const addCardPopup = document.querySelector('.popup_type_add-card');
 const imagePopup = document.querySelector('.popup_type_image');
