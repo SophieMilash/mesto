@@ -85,18 +85,16 @@ function insertCard(item) {
   cardImage.alt = item.name;
   // добавить в DOM
   cardsContainer.prepend(card);
-
-  function imageClickHandler() {
+  // добавление обработчиков
+  deleteCardButton.addEventListener('click', (item) => card.remove(item));
+  likeCardButton.addEventListener('click', () => likeCardButton.classList.toggle('card__like-button_active'));
+  cardImage.addEventListener('click', () => {
     imagePopupImage.src = item.link;
     imagePopupImage.alt = item.name;
     imagePopupCaption.textContent = item.name;
 
     togglePopup(imagePopup);
-  }
-  // добавление обработчиков
-  deleteCardButton.addEventListener('click', (item) => card.remove(item));
-  likeCardButton.addEventListener('click', () => likeCardButton.classList.toggle('card__like-button_active'));
-  cardImage.addEventListener('click', imageClickHandler);
+  });
 }
 
 // вызов карточек из массива
