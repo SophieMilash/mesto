@@ -1,0 +1,13 @@
+.popup__container_type_image {
+  margin: 90px auto 0;
+  padding: 0;
+  width: auto;
+  max-width: 75vw;
+  background-color: transparent;
+}
+
+@media screen and (max-width: 575px) {
+  .popup__container_type_image {
+    margin-top: 136px;
+  }
+}
