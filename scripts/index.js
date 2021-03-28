@@ -93,14 +93,10 @@ function insertCard(item) {
 
     togglePopup(imagePopup);
   }
-
   // добавление обработчиков
-  /* deleteCardButton.addEventListener('click', () => card.target.closest('.card').remove());
-  likeCardButton = addEventListener('click', () => {
-    likeCardButton.classList.toggle('card__like-button_active');
-  }); */
+  deleteCardButton.addEventListener('click', (item) => card.remove(item));
+  likeCardButton.addEventListener('click', () => likeCardButton.classList.toggle('card__like-button_active'));
   cardImage.addEventListener('click', imageClickHandler);
-
 }
 
 // вызов карточек из массива
@@ -136,3 +132,5 @@ closeAddCardPopupBtn.addEventListener('click', () => {
   linkInput.value = '';
 });
 addCardForm.addEventListener('submit', addCardFormSubmitHandler);
+
+closeImagePopupBtn.addEventListener('click', () => togglePopup(imagePopup));
