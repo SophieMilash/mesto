@@ -24,68 +24,7 @@
       <button type="button" class="button button_action_add profile__button"></button>
     </section>
 
-    <section class="cards page__section page__section_place_cards">
-      <!-- <article class="card">
-        <div class="card__image-wrap">
-          <img src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg" alt="Архыз" class="card__image">
-        </div>
-        <button type="button" class="button button_action_delete card__delete-button"></button>
-        <div class="card__info">
-          <h2 class="card__title">Архыз</h2>
-          <button type="button" class="button button_action_like card__like-button"></button>
-        </div>
-      </article>
-      <article class="card">
-        <div class="card__image-wrap">
-          <img src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg" alt="Челябинская область" class="card__image">
-        </div>
-        <button type="button" class="button button_action_delete card__delete-button"></button>
-        <div class="card__info">
-          <h2 class="card__title">Челябинская область</h2>
-          <button type="button" class="button button_action_like card__like-button"></button>
-        </div>
-      </article>
-      <article class="card">
-        <div class="card__image-wrap">
-          <img src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg" alt="Иваново" class="card__image">
-        </div>
-        <button type="button" class="button button_action_delete card__delete-button"></button>
-        <div class="card__info">
-          <h2 class="card__title">Иваново</h2>
-          <button type="button" class="button button_action_like card__like-button"></button>
-        </div>
-      </article>
-      <article class="card">
-        <div class="card__image-wrap">
-          <img src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg" alt="Камчатка" class="card__image">
-        </div>
-        <button type="button" class="button button_action_delete card__delete-button"></button>
-        <div class="card__info">
-          <h2 class="card__title">Камчатка</h2>
-          <button type="button" class="button button_action_like card__like-button"></button>
-        </div>
-      </article>
-      <article class="card">
-        <div class="card__image-wrap">
-          <img src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg" alt="Холмогорский район" class="card__image">
-        </div>
-        <button type="button" class="button button_action_delete card__delete-button"></button>
-        <div class="card__info">
-          <h2 class="card__title">Холмогорский район</h2>
-          <button type="button" class="button button_action_like card__like-button"></button>
-        </div>
-      </article>
-      <article class="card">
-        <div class="card__image-wrap">
-          <img src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg" alt="Байкал" class="card__image">
-        </div>
-        <button type="button" class="button button_action_delete card__delete-button"></button>
-        <div class="card__info">
-          <h2 class="card__title">Байкал</h2>
-          <button type="button" class="button button_action_like card__like-button"></button>
-        </div>
-      </article> -->
-    </section>
+    <section class="cards page__section page__section_place_cards"></section>
   </main>
   <footer class="footer page__section page__section_place_footer">
     <p class="footer__copyright">&copy;2021 Mesto Russia</p>
@@ -94,7 +33,7 @@
   <div class="popup popup_type_edit">
     <div class="popup__container">
       <button type="button" class="button button_action_close popup__close-button"></button>
-      <form class="form" name="edit-form">
+      <form class="form" name="edit">
         <fieldset class="form__profile-info">
           <legend class="form__title">Редактировать профиль</legend>
           <input type="text" name="name" value="" required class="form__item form__item_type_name">
@@ -108,28 +47,24 @@
   <div class="popup popup_type_add-card">
     <div class="popup__container">
       <button type="button" class="button button_action_close popup__close-button"></button>
-      <form class="form" name="edit-form">
+      <form class="form" name="add">
         <fieldset class="form__profile-info">
-          <legend class="form__title">Редактировать профиль</legend>
-          <input type="text" name="name" value="" required class="form__item form__item_type_name">
-          <input type="text" name="activity" value="" required class="form__item form__item_type_activity">
-          <button type="submit" name="submit" class="button button_action_save form__button">Сохранить</button>
+          <legend class="form__title">Новое место</legend>
+          <input type="text" name="title" value="" required class="form__item form__item_type_title" placeholder="Название">
+          <input type="url" name="link" value="" required class="form__item form__item_type_link" placeholder="Ссылка на картинку">
+          <button type="submit" name="submit" class="button button_action_save form__button">Создать</button>
         </fieldset>
       </form>
     </div>
   </div>
 
   <div class="popup popup_type_image">
-    <div class="popup__container">
+    <div class="popup__container popup__container_type_image">
       <button type="button" class="button button_action_close popup__close-button"></button>
-      <form class="form" name="edit-form">
-        <fieldset class="form__profile-info">
-          <legend class="form__title">Редактировать профиль</legend>
-          <input type="text" name="name" value="" required class="form__item form__item_type_name">
-          <input type="text" name="activity" value="" required class="form__item form__item_type_activity">
-          <button type="submit" name="submit" class="button button_action_save form__button">Сохранить</button>
-        </fieldset>
-      </form>
+      <figure class="popup__image-wrap">
+        <img src="#" alt="Фотография" class="popup__image">
+        <figcaption class="popup__caption"></figcaption>
+      </figure>
     </div>
   </div>
 
