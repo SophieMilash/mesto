@@ -1,20 +1,20 @@
 // попапы
-const editPopup = document.querySelector('.popup_type_edit');
+const editProfilePopup = document.querySelector('.popup_type_edit');
 const addCardPopup = document.querySelector('.popup_type_add-card');
 const imagePopup = document.querySelector('.popup_type_image');
 
 // кнопки открытия/закрытия попапов
-const openEditPopupBtn = document.querySelector('.button_action_edit');
+const openEditProfilePopupBtn = document.querySelector('.button_action_edit');
 const openAddCardPopupBtn = document.querySelector('.button_action_add');
-const closeEditPopupBtn = editPopup.querySelector('.button_action_close');
+const closeEditProfilePopupBtn = editProfilePopup.querySelector('.button_action_close');
 const closeAddCardPopupBtn = addCardPopup.querySelector('.button_action_close');
 const closeImagePopupBtn = imagePopup.querySelector('.button_action_close');
 
 // данные для форм:
-    // editForm
-const editForm = document.forms.edit;
-const nameInput = editForm.querySelector('.form__item_type_name');
-const activityInput = editForm.querySelector('.form__item_type_activity');
+    // editProfileForm
+const editProfileForm = document.forms.edit;
+const nameInput = editProfileForm.querySelector('.form__item_type_name');
+const activityInput = editProfileForm.querySelector('.form__item_type_activity');
 const profileName = document.querySelector('.profile__name');
 const profileActivity = document.querySelector('.profile__activity');
     // addCardForm
@@ -41,23 +41,23 @@ function closePopup(popup) {
   popup.classList.remove('popup_opened');
 }
 
-// внесение изменений в профиль с последующим закрытием попапа (editPopup)
-function handleEditFormSubmit (evt) {
+// внесение изменений в профиль с последующим закрытием попапа (editProfilePopup)
+function handleEditProfileFormSubmit (evt) {
   evt.preventDefault();
   profileName.textContent = nameInput.value;
   profileActivity.textContent = activityInput.value;
-  closePopup(editPopup);
+  closePopup(editProfilePopup);
 }
 
-// генерация новой карточки
+// генерация карточки
 function createCard(item) {
-  // склонировать template
+  // клонирование template
   const card = cardTemplate.cloneNode(true);
   const cardTitle = card.querySelector('.card__title');
   const cardImage = card.querySelector('.card__image');
   const deleteCardButton = card.querySelector('.button_action_delete');
   const likeCardButton = card.querySelector('.button_action_like');
-  // запонить данными
+  // запонилнение данными
   cardTitle.textContent = item.name;
   cardImage.src = item.link;
   cardImage.alt = item.name;
@@ -74,43 +74,33 @@ function createCard(item) {
   return card;
 }
 
-// добавление новой карточки в контейнер
-function getCard() {
-  const result = initialCards.map(item => {
-    const newCard = createCard(item);
-    return newCard;
-  });
-  cardsContainer.prepend(...result);
-
-}
-getCard();
-
 // вызов карточек из массива
-initialCards.forEach(createCard);
+initialCards.forEach(item => {
+ cardsContainer.prepend(createCard(item));
+});
 
-// добавление карточек с последующим закрытием попапа (addCardPopup)
+// добавление карточки с последующим закрытием попапа (addCardPopup)
   // поля ввода обнуляются после закрытия
 function handleAddCardFormSubmit (evt) {
   evt.preventDefault();
 
-  createCard({
+  cardsContainer.prepend(createCard({
     name: titleInput.value,
     link: linkInput.value
-  });
-  cardsContainer.prepend(createCard);
+  }));
   addCardForm.reset();
   closePopup(addCardPopup);
 }
 
-// открытие / закрытие editPopup
+// открытие / закрытие editProfilePopup
   // поля заполняются значениями со страницы
-openEditPopupBtn.addEventListener('click', () => {
-  openPopup(editPopup);
+openEditProfilePopupBtn.addEventListener('click', () => {
+  openPopup(editProfilePopup);
   nameInput.value = profileName.textContent;
   activityInput.value = profileActivity.textContent;
 });
-closeEditPopupBtn.addEventListener('click', () => closePopup(editPopup));
-editForm.addEventListener('submit', handleEditFormSubmit);
+closeEditProfilePopupBtn.addEventListener('click', () => closePopup(editProfilePopup));
+editProfileForm.addEventListener('submit', handleEditProfileFormSubmit);
 
 // открытие / закрытие addCardPopup
 openAddCardPopupBtn.addEventListener('click', () => openPopup(addCardPopup));
