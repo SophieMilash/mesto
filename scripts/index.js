@@ -74,9 +74,14 @@ function createCard(item) {
   return card;
 }
 
+// функция добавления карточки
+function renderCard (item) {
+  cardsContainer.prepend(createCard(item));
+}
+
 // вызов карточек из массива
 initialCards.forEach(item => {
- cardsContainer.prepend(createCard(item));
+  renderCard(item);
 });
 
 // добавление карточки с последующим закрытием попапа (addCardPopup)
@@ -84,10 +89,10 @@ initialCards.forEach(item => {
 function handleAddCardFormSubmit (evt) {
   evt.preventDefault();
 
-  cardsContainer.prepend(createCard({
+  renderCard({
     name: titleInput.value,
     link: linkInput.value
-  }));
+  });
   addCardForm.reset();
   closePopup(addCardPopup);
 }
