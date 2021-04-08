@@ -34,6 +34,20 @@ const cardTemplate = document.querySelector('.card-template').content.querySelec
 // открытие попапа
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+
+  // возможность закрытия попапа кликом на оверлей
+  document.addEventListener('click', function (evt) {
+    if (evt.target.classList.contains('popup')) {
+      closePopup(popup);
+    }
+  });
+
+  // возможность закрытия попапа нажатием на Esc 
+  document.addEventListener('keydown', function (evt) {
+    if (evt.key === 'Escape') {
+      closePopup(popup);
+    }
+  });
 }
 
 // закрытие попапа
