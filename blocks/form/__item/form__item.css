@@ -1,18 +1,18 @@
 .form__item {
-  margin-bottom: 21px;
+  margin-top: 21px;
   padding: 8px 0;
   width: 100%;
   box-sizing: border-box;
   outline: none;
   border: none;
-  border-bottom: 1px solid rgba(0, 0, 0, .2);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   font-weight: 400;
   font-size: 14px;
   line-height: 1.2;
 }
 
-.form__item:last-of-type {
-  margin-bottom: 0;
+.form__item:first-of-type {
+  margin-top: 0;
 }
 
 .form__item::placeholder {
@@ -24,6 +24,23 @@
 
 .form__item:focus {
   outline: none;
-  border: 1px solid rgba(0, 0, 0, .2);
-  box-shadow: 0 0 2px rgba(0, 0, 0, .15);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.15);
+}
+
+.form__item_type_error {
+  border-bottom: 1px solid #f00;
+}
+
+.form__item-error {
+  visibility: hidden;
+}
+
+.form__item-error_active {
+  visibility: visible;
+  margin-top: 5px;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.2;
+  color: #f00;
 }
