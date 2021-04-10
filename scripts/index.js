@@ -13,14 +13,14 @@ const closeImagePopupBtn = imagePopup.querySelector('.button_action_close');
 // данные для форм:
     // editProfileForm
 const editProfileForm = document.forms.edit;
-const nameInput = editProfileForm.querySelector('.form__item_type_name');
-const activityInput = editProfileForm.querySelector('.form__item_type_activity');
+const nameInput = editProfileForm.querySelector('.form__input_type_name');
+const activityInput = editProfileForm.querySelector('.form__input_type_activity');
 const profileName = document.querySelector('.profile__name');
 const profileActivity = document.querySelector('.profile__activity');
     // addCardForm
 const addCardForm = document.forms.add;
-const titleInput = addCardForm.querySelector('.form__item_type_title');
-const linkInput = addCardForm.querySelector('.form__item_type_link');
+const titleInput = addCardForm.querySelector('.form__input_type_title');
+const linkInput = addCardForm.querySelector('.form__input_type_link');
 
 // элемемнты imagePopup
 const imagePopupImage = imagePopup.querySelector('.popup__image');

@@ -2,17 +2,17 @@
 function showInputError(formElement, inputElement, errorMessage) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
 
-  inputElement.classList.add('form__item_type_error');
+  inputElement.classList.add('form__input_type_error');
   errorElement.textContent = errorMessage;
-  errorElement.classList.add('form__item-error_active');
+  errorElement.classList.add('form__input-error_active');
 }
 
 // удаление текста с ошибкой
 function hideInputError(formElement, inputElement) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
 
-  inputElement.classList.remove('form__item_type_error');
-  errorElement.classList.remove('form__item-error_active');
+  inputElement.classList.remove('form__input_type_error');
+  errorElement.classList.remove('form__input-error_active');
   errorElement.textContent = '';
 }
 
@@ -23,7 +23,7 @@ function hasInvalidInput(inputList) {
   });
 }
 
-// блокировка кнопки submit
+// блокировка кнопки отправки
 // если есть хотя бы один невалидный инпут
 function toggleButtonState(inputList, buttonElement) {
   if (hasInvalidInput(inputList)) {
@@ -46,8 +46,8 @@ function checkInputValidity(formElement, inputElement) {
 
 // добавление обработчиков всем полям формы
 function setEventListeners(formElement) {
-  // массив всех послей формы
-  const inputList = Array.from(formElement.querySelectorAll('.form__item'));
+  // массив всех полей формы
+  const inputList = Array.from(formElement.querySelectorAll('.form__input'));
   const buttonElement = formElement.querySelector('.button_action_submit');
 
   // блокировка кнопки отправки до начала ввода данных

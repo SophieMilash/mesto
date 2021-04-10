@@ -36,10 +36,10 @@
       <form class="form" name="edit" novalidate>
         <fieldset class="form__profile-info">
           <legend class="form__title">Редактировать профиль</legend>
-          <input type="text" name="name" id="name-input" value="" minlength="2" maxlength="40" required class="form__item form__item_type_name">
-          <span class="form__item-error name-input-error">Вы пропустили это поле.</span>
-          <input type="text" name="activity" id="activity-input" value="" minlength="2" maxlength="200" required class="form__item form__item_type_activity">
-          <span class="form__item-error activity-input-error">Вы пропустили это поле.</span>
+          <input type="text" name="name" id="name-input" value="" minlength="2" maxlength="40" required class="form__input form__input_type_name">
+          <span class="form__input-error name-input-error">Вы пропустили это поле.</span>
+          <input type="text" name="activity" id="activity-input" value="" minlength="2" maxlength="200" required class="form__input form__input_type_activity">
+          <span class="form__input-error activity-input-error">Вы пропустили это поле.</span>
           <button type="submit" name="submit" class="button button_action_submit form__button">Сохранить</button>
         </fieldset>
       </form>
@@ -52,10 +52,10 @@
       <form class="form" name="add" novalidate>
         <fieldset class="form__profile-info">
           <legend class="form__title">Новое место</legend>
-          <input type="text" name="title" id="title-input" value="" minlength="1" maxlength="30" required class="form__item form__item_type_title" placeholder="Название">
-          <span class="form__item-error title-input-error">Вы пропустили это поле.</span>
-          <input type="url" name="link" id="link-input" value="" required class="form__item form__item_type_link" placeholder="Ссылка на картинку">
-          <span class="form__item-error link-input-error">Введите адрес сайта.</span>
+          <input type="text" name="title" id="title-input" value="" minlength="1" maxlength="30" required class="form__input form__input_type_title" placeholder="Название">
+          <span class="form__input-error title-input-error">Вы пропустили это поле.</span>
+          <input type="url" name="link" id="link-input" value="" required class="form__input form__input_type_link" placeholder="Ссылка на картинку">
+          <span class="form__input-error link-input-error">Введите адрес сайта.</span>
           <button type="submit" name="submit" class="button button_action_submit form__button">Создать</button>
         </fieldset>
       </form>
