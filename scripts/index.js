@@ -31,31 +31,36 @@ const cardsContainer = document.querySelector('.cards');
 const cardTemplate = document.querySelector('.card-template').content.querySelector('.card');
 
 
+// возможность закрытия попапа нажатием на Esc
+function closePopupByEsc(evt) {
+  const popup = document.querySelector('.popup_opened');
+
+  if (evt.key === 'Escape') {
+    closePopup(popup);
+  }
+}
+
+// возможность закрытия попапа кликом на оверлей
+function closePopupByOverlay(evt) {
+  const popup = document.querySelector('.popup_opened');
+
+  if (evt.target.classList.contains('popup')) {
+    closePopup(popup);
+  }
+}
+
 // открытие попапа
 function openPopup(popup) {
   popup.classList.add('popup_opened');
-  addPopupClosingOptions(popup);
+
+  document.addEventListener('click', closePopupByOverlay);
+  document.addEventListener('keydown', closePopupByEsc);
 }
 
 // закрытие попапа
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
-}
-
-// альтернативные возможности закрытия попапа
-function addPopupClosingOptions(popup) {
-  // возможность закрытия попапа кликом на оверлей
-  document.addEventListener('click', function (evt) {
-    if (evt.target.classList.contains('popup')) {
-      closePopup(popup);
-    }
-  });
-  // возможность закрытия попапа нажатием на Esc
-  document.addEventListener('keydown', function (evt) {
-    if (evt.key === 'Escape') {
-      closePopup(popup);
-    }
-  });
+  document.removeEventListener('keydown', closePopupByEsc);
 }
 
 // внесение изменений в профиль с последующим закрытием попапа (editProfilePopup)
