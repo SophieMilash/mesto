@@ -27,20 +27,3 @@
   border: 1px solid rgba(0, 0, 0, 0.2);
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.15);
 }
-
-.form__item_type_error {
-  border-bottom: 1px solid #f00;
-}
-
-.form__item-error {
-  visibility: hidden;
-}
-
-.form__item-error_active {
-  visibility: visible;
-  margin-top: 5px;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 1.2;
-  color: #f00;
-}

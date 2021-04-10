@@ -42,7 +42,7 @@ function openPopup(popup) {
     }
   });
 
-  // возможность закрытия попапа нажатием на Esc 
+  // возможность закрытия попапа нажатием на Esc
   document.addEventListener('keydown', function (evt) {
     if (evt.key === 'Escape') {
       closePopup(popup);
@@ -128,101 +128,3 @@ addCardForm.addEventListener('submit', handleAddCardFormSubmit);
 
 // закрытие imagePopup
 closeImagePopupBtn.addEventListener('click', () => closePopup(imagePopup));
-
-
-
-// Функция, которая добавляет класс с ошибкой
-function showInputError(formElement, inputElement, errorMessage) {
-  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-
-  inputElement.classList.add('form__item_type_error');
-  errorElement.textContent = errorMessage;
-  errorElement.classList.add('form__item-error_active');
-}
-
-// Функция, которая удаляет класс с ошибкой
-function hideInputError(formElement, inputElement) {
-  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-
-  inputElement.classList.remove('form__item_type_error');
-  errorElement.classList.remove('form__item-error_active');
-  errorElement.textContent = '';
-}
-
-// Проверка валидности поля
-function checkInputValidity(formElement, inputElement) {
-  if (!inputElement.validity.valid) {
-    // Если поле не проходит валидацию, покажем ошибку
-    showInputError(formElement, inputElement, inputElement.validationMessage);
-  } else {
-    // Если проходит, скроем
-    hideInputError(formElement, inputElement);
-  }
-}
-
-// Проверка наличия невалидного поля
-function hasInvalidInput(inputList) {
-  // проходим по этому массиву методом some
-  return inputList.some((inputElement) => {
-    // Если поле не валидно, колбэк вернёт true
-    // Обход массива прекратится и вся фунцкция
-    // hasInvalidInput вернёт true
-
-    return !inputElement.validity.valid;
-  })
-}
-
-// Функция принимает массив полей ввода
-// и элемент кнопки, состояние которой нужно менять
-// Стилизация кнопки submit 
-function toggleButtonState(inputList, buttonElement) {
-  // Если есть хотя бы один невалидный инпут
-  if (hasInvalidInput(inputList)) {
-    // сделай кнопку неактивной
-    buttonElement.classList.add('form__submit_inactive');
-  } else {
-    // иначе сделай кнопку активной
-    buttonElement.classList.remove('form__submit_inactive');
-  }
-}
-
-// Добавление обработчиков всем полям формы
-function setEventListeners(formElement) {
-  // Находим все поля внутри формы,
-  // сделаем из них массив методом Array.from
-  const inputList = Array.from(formElement.querySelectorAll('.form__item'));
-
-  // Обойдём все элементы полученной коллекции
-  inputList.forEach((inputElement) => {
-    // каждому полю добавим обработчик события input
-    inputElement.addEventListener('input', () => {
-      // Внутри колбэка вызовем isValid,
-      // передав ей форму и проверяемый элемент
-      checkInputValidity(formElement, inputElement);
-    });
-  });
-}
-
-// Добавление обработчиков всем формам
-function enableValidation() {
-  // Найдём все формы с указанным классом в DOM,
-  // сделаем из них массив методом Array.from
-  const formList = Array.from(document.querySelectorAll('.form'));
-
-  // Переберём полученную коллекцию
-  formList.forEach((formElement) => {
-    formElement.addEventListener('submit', (evt) => {
-      // У каждой формы отменим стандартное поведение
-      evt.preventDefault();
-    });
-
-    // Для каждой формы вызовем функцию setEventListeners,
-    // передав ей элемент формы
-    setEventListeners(formElement);
-  });
-}
-
-// Вызовем функцию
-enableValidation();
-
-
