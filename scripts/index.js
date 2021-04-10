@@ -13,14 +13,14 @@ const closeImagePopupBtn = imagePopup.querySelector('.button_action_close');
 // данные для форм:
     // editProfileForm
 const editProfileForm = document.forms.edit;
-const nameInput = editProfileForm.querySelector('.form__item_type_name');
-const activityInput = editProfileForm.querySelector('.form__item_type_activity');
+const nameInput = editProfileForm.querySelector('.form__input_type_name');
+const activityInput = editProfileForm.querySelector('.form__input_type_activity');
 const profileName = document.querySelector('.profile__name');
 const profileActivity = document.querySelector('.profile__activity');
     // addCardForm
 const addCardForm = document.forms.add;
-const titleInput = addCardForm.querySelector('.form__item_type_title');
-const linkInput = addCardForm.querySelector('.form__item_type_link');
+const titleInput = addCardForm.querySelector('.form__input_type_title');
+const linkInput = addCardForm.querySelector('.form__input_type_link');
 
 // элемемнты imagePopup
 const imagePopupImage = imagePopup.querySelector('.popup__image');
@@ -31,14 +31,36 @@ const cardsContainer = document.querySelector('.cards');
 const cardTemplate = document.querySelector('.card-template').content.querySelector('.card');
 
 
+// возможность закрытия попапа нажатием на Esc
+function closePopupByEsc(evt) {
+  const popup = document.querySelector('.popup_opened');
+
+  if (evt.key === 'Escape') {
+    closePopup(popup);
+  }
+}
+
+// возможность закрытия попапа кликом на оверлей
+function closePopupByOverlay(evt) {
+  const popup = document.querySelector('.popup_opened');
+
+  if (evt.target.classList.contains('popup')) {
+    closePopup(popup);
+  }
+}
+
 // открытие попапа
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+
+  document.addEventListener('click', closePopupByOverlay);
+  document.addEventListener('keydown', closePopupByEsc);
 }
 
 // закрытие попапа
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closePopupByEsc);
 }
 
 // внесение изменений в профиль с последующим закрытием попапа (editProfilePopup)
