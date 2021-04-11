@@ -1,18 +1,28 @@
+// объект с настройками валидации
+const validationConfig = {
+  formSelector: '.form',
+  inputSelector: '.form__input',
+  submitButtonSelector: '.button_action_submit',
+  inactiveButtonClass: 'form__button_disabled',
+  inputErrorClass: 'form__input_type_error',
+  errorClass: 'form__input-error_active'
+}
+
 // добавление текста с ошибкой
 function showInputError(formElement, inputElement, errorMessage) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
 
-  inputElement.classList.add('form__input_type_error');
+  inputElement.classList.add(validationConfig.inputErrorClass);
   errorElement.textContent = errorMessage;
-  errorElement.classList.add('form__input-error_active');
+  errorElement.classList.add(validationConfig.errorClass);
 }
 
 // удаление текста с ошибкой
 function hideInputError(formElement, inputElement) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
 
-  inputElement.classList.remove('form__input_type_error');
-  errorElement.classList.remove('form__input-error_active');
+  inputElement.classList.remove(validationConfig.inputErrorClass);
+  errorElement.classList.remove(validationConfig.errorClass);
   errorElement.textContent = '';
 }
 
@@ -28,10 +38,10 @@ function hasInvalidInput(inputList) {
 function toggleButtonState(inputList, buttonElement) {
   if (hasInvalidInput(inputList)) {
     buttonElement.setAttribute('disabled', true);
-    buttonElement.classList.add('form__button_disabled');
+    buttonElement.classList.add(validationConfig.inactiveButtonClass);
   } else {
     buttonElement.removeAttribute('disabled');
-    buttonElement.classList.remove('form__button_disabled');
+    buttonElement.classList.remove(validationConfig.inactiveButtonClass);
   }
 }
 
@@ -47,8 +57,8 @@ function checkInputValidity(formElement, inputElement) {
 // добавление обработчиков всем полям формы
 function setEventListeners(formElement) {
   // массив всех полей формы
-  const inputList = Array.from(formElement.querySelectorAll('.form__input'));
-  const buttonElement = formElement.querySelector('.button_action_submit');
+  const inputList = Array.from(formElement.querySelectorAll(validationConfig.inputSelector));
+  const buttonElement = formElement.querySelector(validationConfig.submitButtonSelector);
 
   // блокировка кнопки отправки до начала ввода данных
   toggleButtonState(inputList, buttonElement);
@@ -74,4 +84,5 @@ function enableValidation() {
     setEventListeners(formElement);
   });
 }
-enableValidation();
+
+enableValidation(validationConfig);

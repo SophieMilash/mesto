@@ -33,18 +33,16 @@ const cardTemplate = document.querySelector('.card-template').content.querySelec
 
 // возможность закрытия попапа нажатием на Esc
 function closePopupByEsc(evt) {
-  const popup = document.querySelector('.popup_opened');
-
   if (evt.key === 'Escape') {
+    const popup = document.querySelector('.popup_opened');
     closePopup(popup);
   }
 }
 
 // возможность закрытия попапа кликом на оверлей
 function closePopupByOverlay(evt) {
-  const popup = document.querySelector('.popup_opened');
-
   if (evt.target.classList.contains('popup')) {
+    const popup = document.querySelector('.popup_opened');
     closePopup(popup);
   }
 }
@@ -116,6 +114,7 @@ function handleAddCardFormSubmit (evt) {
     link: linkInput.value
   });
   addCardForm.reset();
+  /* toggleButtonState(inputList, buttonElement) */
   closePopup(addCardPopup);
 }
 
