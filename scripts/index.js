@@ -106,15 +106,19 @@ initialCards.forEach(item => {
 
 // добавление карточки с последующим закрытием попапа (addCardPopup)
   // поля ввода обнуляются после закрытия
+  // кнопка отправки становится неактивной
 function handleAddCardFormSubmit (evt) {
   evt.preventDefault();
+
+  const inputList = Array.from(addCardForm.querySelectorAll(validationConfig.inputSelector));
+  const buttonElement = addCardForm.querySelector(validationConfig.submitButtonSelector);
 
   renderCard({
     name: titleInput.value,
     link: linkInput.value
   });
   addCardForm.reset();
-  /* toggleButtonState(inputList, buttonElement) */
+  toggleButtonState(inputList, buttonElement);
   closePopup(addCardPopup);
 }
 
