@@ -1,7 +1,9 @@
+import { initialCards } from './initial-сards.js';
+import { DefaultCard } from './DefaultCard.js';
+
 // попапы
 const editProfilePopup = document.querySelector('.popup_type_edit');
-const addCardPopup = document.querySelector('.popup_type_add-card');
-const imagePopup = document.querySelector('.popup_type_image');
+const addCardPopup = document.querySelector('.popup_type_add-card'); const imagePopup = document.querySelector('.popup_type_image');
 
 // кнопки открытия/закрытия попапов
 const openEditProfilePopupBtn = document.querySelector('.button_action_edit');
@@ -22,13 +24,13 @@ const addCardForm = document.forms.add;
 const titleInput = addCardForm.querySelector('.form__input_type_title');
 const linkInput = addCardForm.querySelector('.form__input_type_link');
 
-// элемемнты imagePopup
+/* // элемемнты imagePopup
 const imagePopupImage = imagePopup.querySelector('.popup__image');
 const imagePopupCaption = imagePopup.querySelector('.popup__caption');
 
 // карточки
 const cardsContainer = document.querySelector('.cards');
-const cardTemplate = document.querySelector('.card-template').content.querySelector('.card');
+const cardTemplate = document.querySelector('.card-template').content.querySelector('.card'); */
 
 
 // возможность закрытия попапа нажатием на Esc
@@ -48,7 +50,7 @@ function closePopupByOverlay(evt) {
 }
 
 // открытие попапа
-function openPopup(popup) {
+export function openPopup(popup) {
   popup.classList.add('popup_opened');
 
   document.addEventListener('click', closePopupByOverlay);
@@ -70,7 +72,7 @@ function handleEditProfileFormSubmit (evt) {
 }
 
 // генерация карточки
-function createCard(item) {
+/* function createCard(item) {
   // клонирование template
   const card = cardTemplate.cloneNode(true);
   const cardTitle = card.querySelector('.card__title');
@@ -102,6 +104,15 @@ function renderCard (item) {
 // вызов карточек из массива
 initialCards.forEach(item => {
   renderCard(item);
+}); */
+
+// вызов карточек из массива
+// создание экземпляра класса
+initialCards.forEach(item => {
+  const card = new DefaultCard(item, '.card-template');
+  const cardElement = card.generateCard();
+
+  document.querySelector('.cards').prepend(cardElement);
 });
 
 // добавление карточки с последующим закрытием попапа (addCardPopup)
