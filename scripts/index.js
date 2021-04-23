@@ -1,5 +1,16 @@
 import { initialCards } from './initial-сards.js';
 import Card from './Card.js';
+import FormValidator from './FormValidator.js';
+
+// объект с настройками валидации
+const validationConfig = {
+  formSelector: '.form',
+  inputSelector: '.form__input',
+  submitButtonSelector: '.button_action_submit',
+  inactiveButtonClass: 'form__button_disabled',
+  inputErrorClass: 'form__input_type_error',
+  errorClass: 'form__input-error_active'
+}
 
 // попапы
 const editProfilePopup = document.querySelector('.popup_type_edit');
@@ -55,7 +66,6 @@ function closePopup(popup) {
   document.removeEventListener('keydown', closePopupByEsc);
 }
 
-
 // внесение изменений в профиль с последующим закрытием попапа (editProfilePopup)
 function handleEditProfileFormSubmit (evt) {
   evt.preventDefault();
@@ -65,7 +75,7 @@ function handleEditProfileFormSubmit (evt) {
 }
 
 // рендеринг карточки
-// создание экземпляра класса
+// создание экземпляра класса Card
 function renderCard (item) {
   const card = new Card(item, '.card-template');
   const cardElement = card.generateCard();
@@ -84,34 +94,42 @@ initialCards.forEach(item => {
 function handleAddCardFormSubmit (evt) {
   evt.preventDefault();
 
-  const inputList = Array.from(addCardForm.querySelectorAll(validationConfig.inputSelector));
-  const buttonElement = addCardForm.querySelector(validationConfig.submitButtonSelector);
-
   renderCard({
     name: titleInput.value,
     link: linkInput.value
   });
   addCardForm.reset();
-  toggleButtonState(inputList, buttonElement);
+  enableFormValidation(addCardForm);
   closePopup(addCardPopup);
 }
 
+// создание экземпляров класса FormValidator
+function enableFormValidation(formElement) {
+  const formValidator = new FormValidator(validationConfig, formElement);
+  formValidator.enableValidation();
+}
+
 // удаление сообщений об ошибках
-function removeInputErrors(formElement) {
+/* function removeInputErrors(formElement) {
   const inputList = Array.from(formElement.querySelectorAll('.form__input'));
 
   inputList.forEach(item => {
     if (!item.validity.valid) {
-      hideInputError(formElement, item);
+      const errorElement = formElement.querySelector(`.${item.id}-error`);
+      errorElement.textContent = '';
+      errorElement.classList.add(validationConfig.errorClass);
+      item.classList.remove(validationConfig.inputErrorClass);
+      // hideInputError(formElement, item);
     }
   });
-}
+} */
 
 // открытие / закрытие editProfilePopup
   // поля заполняются значениями со страницы
 openEditProfilePopupBtn.addEventListener('click', () => {
   openPopup(editProfilePopup);
-  removeInputErrors(editProfileForm);
+  enableFormValidation(editProfileForm);
+  /* removeInputErrors(editProfileForm); */
   nameInput.value = profileName.textContent;
   activityInput.value = profileActivity.textContent;
 });
@@ -121,7 +139,8 @@ editProfileForm.addEventListener('submit', handleEditProfileFormSubmit);
 // открытие / закрытие addCardPopup
 openAddCardPopupBtn.addEventListener('click', () => {
   openPopup(addCardPopup);
-  removeInputErrors(addCardForm);
+  enableFormValidation(addCardForm);
+  /* removeInputErrors(addCardForm); */
   addCardForm.reset();
 });
 closeAddCardPopupBtn.addEventListener('click', () => closePopup(addCardPopup));
