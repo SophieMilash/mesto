@@ -30,24 +30,30 @@ function openPopup(popup) {
   document.addEventListener('keydown', closePopupByEsc);
 }
 
-// открытие попапа imagePopup
-function handleCardClick(link, name) {
+function openEditProfilePopup() {
+  editProfileFormValidator.enableValidation();
+  editProfileFormValidator.removeInputErrors();
+  editPopupConfig.nameInput.value = editPopupConfig.profileName.textContent;
+  editPopupConfig.activityInput.value = editPopupConfig.profileActivity.textContent;
+
+  openPopup(editPopupConfig.editProfilePopup);
+};
+
+function openAddCardPopup() {
+  addCardFormValidator.enableValidation();
+  addCardFormValidator.removeInputErrors();
+  addPopupConfig.addCardForm.reset();
+
+  openPopup(addPopupConfig.addCardPopup);
+}
+
+function openImagePopup(link, name) {
   imagePopupConfig.imagePopupImage.src = link;
   imagePopupConfig.imagePopupImage.alt = name;
   imagePopupConfig.imagePopupCaption.textContent = name;
 
   openPopup(imagePopupConfig.imagePopup);
 };
-
-// открытие попапа imagePopup
-function handleCardClick(link, name) {
-  imagePopupConfig.imagePopupImage.src = link;
-  imagePopupConfig.imagePopupImage.alt = name;
-  imagePopupConfig.imagePopupCaption.textContent = name;
-
-  openPopup(imagePopupConfig.imagePopup);
-};
-
 
 // закрытие попапа
 function closePopup(popup) {
@@ -66,7 +72,7 @@ function handleEditProfileFormSubmit(evt) {
 // рендеринг карточки
 // создание экземпляра класса Card
 function renderCard(item) {
-  const card = new Card(item, handleCardClick, '.card-template');
+  const card = new Card(item, openImagePopup, '.card-template');
   const cardElement = card.generateCard();
 
   document.querySelector('.cards').prepend(cardElement);
@@ -78,7 +84,6 @@ initialCards.forEach(item => {
 });
 
 // добавление карточки с последующим закрытием попапа (addCardPopup)
-  // поля ввода обнуляются после закрытия
 function handleAddCardFormSubmit(evt) {
   evt.preventDefault();
 
@@ -91,24 +96,12 @@ function handleAddCardFormSubmit(evt) {
 }
 
 // открытие / закрытие editProfilePopup
-  // поля заполняются значениями со страницы
-  editPopupConfig.openEditProfilePopupBtn.addEventListener('click', () => {
-  openPopup(editPopupConfig.editProfilePopup);
-  editProfileFormValidator.enableValidation();
-  editProfileFormValidator.removeInputErrors();
-  editPopupConfig.nameInput.value = editPopupConfig.profileName.textContent;
-  editPopupConfig.activityInput.value = editPopupConfig.profileActivity.textContent;
-});
+editPopupConfig.openEditProfilePopupBtn.addEventListener('click', openEditProfilePopup);
 editPopupConfig.closeEditProfilePopupBtn.addEventListener('click', () => closePopup(editPopupConfig.editProfilePopup));
 editPopupConfig.editProfileForm.addEventListener('submit', handleEditProfileFormSubmit);
 
 // открытие / закрытие addCardPopup
-addPopupConfig.openAddCardPopupBtn.addEventListener('click', () => {
-  openPopup(addPopupConfig.addCardPopup);
-  addCardFormValidator.enableValidation();
-  addCardFormValidator.removeInputErrors();
-  addPopupConfig.addCardForm.reset();
-});
+addPopupConfig.openAddCardPopupBtn.addEventListener('click', openAddCardPopup);
 addPopupConfig.closeAddCardPopupBtn.addEventListener('click', () => closePopup(addPopupConfig.addCardPopup));
 addPopupConfig.addCardForm.addEventListener('submit', handleAddCardFormSubmit);
 
