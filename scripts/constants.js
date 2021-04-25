@@ -36,4 +36,34 @@ const validationConfig = {
   errorClass: 'form__input-error_active'
 }
 
-export { initialCards, validationConfig };
+// данные попапа editProfilePopup и формы editProfileForm
+const editPopupConfig = {
+  editProfilePopup: document.querySelector('.popup_type_edit'),
+  openEditProfilePopupBtn: document.querySelector('.button_action_edit'),
+  closeEditProfilePopupBtn: document.querySelector('.button_action_edit-popup-close'),
+  editProfileForm: document.forms.edit,
+  nameInput: document.querySelector('.form__input_type_name'),
+  activityInput: document.querySelector('.form__input_type_activity'),
+  profileName: document.querySelector('.profile__name'),
+  profileActivity: document.querySelector('.profile__activity')
+}
+
+// данные попапа addCardPopup и формы addCardForm
+const addPopupConfig = {
+  addCardPopup: document.querySelector('.popup_type_add-card'),
+  openAddCardPopupBtn: document.querySelector('.button_action_add-card'),
+  closeAddCardPopupBtn: document.querySelector('.button_action_add-popup-close'),
+  addCardForm: document.forms.add,
+  titleInput: document.querySelector('.form__input_type_title'),
+  linkInput: document.querySelector('.form__input_type_link')
+}
+
+// данные попапа imagePopup
+const imagePopupConfig = {
+  imagePopup: document.querySelector('.popup_type_image'),
+  imagePopupImage: document.querySelector('.popup__image'),
+  imagePopupCaption: document.querySelector('.popup__caption'),
+  closeImagePopupBtn: document.querySelector('.button_action_img-popup-close')
+}
+
+export { initialCards, validationConfig, editPopupConfig, addPopupConfig, imagePopupConfig };

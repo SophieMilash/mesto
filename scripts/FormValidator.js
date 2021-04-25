@@ -7,6 +7,8 @@ export default class FormValidator {
     this._inputErrorClass = data.inputErrorClass;
     this._errorClass = data.errorClass;
     this._formElement = formElement;
+    this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
+    this._buttonElement = this._formElement.querySelector(this._submitButtonSelector);
   }
 
   // добавление текста с ошибкой
@@ -27,25 +29,6 @@ export default class FormValidator {
     errorElement.textContent = '';
   }
 
-  // проверка наличия невалидного поля
-  _hasInvalidInput(inputList) {
-    return inputList.some((inputElement) => {
-      return !inputElement.validity.valid;
-    });
-  }
-
-  // блокировка кнопки отправки
-  // если есть хотя бы один невалидный инпут
-  _toggleButtonState(inputList, buttonElement) {
-    if (this._hasInvalidInput(inputList)) {
-      buttonElement.setAttribute('disabled', true);
-      buttonElement.classList.add(this._inactiveButtonClass);
-    } else {
-      buttonElement.removeAttribute('disabled');
-      buttonElement.classList.remove(this._inactiveButtonClass);
-    }
-  }
-
   // проверка валидности поля
   _checkInputValidity(inputElement) {
     if (!inputElement.validity.valid) {
@@ -55,30 +38,46 @@ export default class FormValidator {
     }
   }
 
+  // проверка наличия невалидного поля
+  _hasInvalidInput() {
+    return this._inputList.some((inputElement) => {
+      return !inputElement.validity.valid;
+    });
+  }
+
+  // блокировка кнопки отправки
+  // если есть хотя бы один невалидный инпут
+  _toggleButtonState() {
+    if (this._hasInvalidInput()) {
+      this._buttonElement.setAttribute('disabled', true);
+      this._buttonElement.classList.add(this._inactiveButtonClass);
+    } else {
+      this._buttonElement.removeAttribute('disabled');
+      this._buttonElement.classList.remove(this._inactiveButtonClass);
+    }
+  }
+
   _setEventListeners() {
-    const inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
-    const buttonElement = this._formElement.querySelector(this._submitButtonSelector);
-
     // блокировка кнопки отправки до начала ввода данных
-    this._toggleButtonState(inputList, buttonElement);
+    this._toggleButtonState();
 
-    inputList.forEach((inputElement) => {
+    this._inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
         this._checkInputValidity(inputElement);
-        this._toggleButtonState(inputList, buttonElement);
+        this._toggleButtonState();
       });
     });
   }
 
   enableValidation() {
-    const formList = Array.from(document.querySelectorAll('.form'));
+    this._setEventListeners();
+  }
 
-    formList.forEach(() => {
-      this._formElement.addEventListener('submit', (evt) => {
-        evt.preventDefault();
-      });
-
-      this._setEventListeners(this._formElement);
+  removeInputErrors() {
+    this._inputList.forEach(inputElement => {
+      if (!inputElement.validity.valid) {
+        this._hideInputError(inputElement);
+      }
     });
   }
 }
