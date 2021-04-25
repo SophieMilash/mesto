@@ -1,21 +1,15 @@
-import { initialCards } from './initial-сards.js';
+import { initialCards, validationConfig } from './constants.js';
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
-
-// объект с настройками валидации
-const validationConfig = {
-  formSelector: '.form',
-  inputSelector: '.form__input',
-  submitButtonSelector: '.button_action_submit',
-  inactiveButtonClass: 'form__button_disabled',
-  inputErrorClass: 'form__input_type_error',
-  errorClass: 'form__input-error_active'
-}
 
 // попапы
 const editProfilePopup = document.querySelector('.popup_type_edit');
 const addCardPopup = document.querySelector('.popup_type_add-card');
 const imagePopup = document.querySelector('.popup_type_image');
+
+// элементы imagePopup
+const imagePopupImage = imagePopup.querySelector('.popup__image');
+const imagePopupCaption = imagePopup.querySelector('.popup__caption');
 
 // кнопки открытия/закрытия попапов
 const openEditProfilePopupBtn = document.querySelector('.button_action_edit');
@@ -53,12 +47,21 @@ function closePopupByOverlay(evt) {
 }
 
 // открытие попапа
-export function openPopup(popup) {
+function openPopup(popup) {
   popup.classList.add('popup_opened');
 
   document.addEventListener('click', closePopupByOverlay);
   document.addEventListener('keydown', closePopupByEsc);
 }
+
+// открытие попапа imagePopup
+function handleCardClick(link, name) {
+  imagePopupImage.src = link;
+  imagePopupImage.alt = name;
+  imagePopupCaption.textContent = name;
+
+  openPopup(imagePopup);
+};
 
 // закрытие попапа
 function closePopup(popup) {
@@ -67,7 +70,7 @@ function closePopup(popup) {
 }
 
 // внесение изменений в профиль с последующим закрытием попапа (editProfilePopup)
-function handleEditProfileFormSubmit (evt) {
+function handleEditProfileFormSubmit(evt) {
   evt.preventDefault();
   profileName.textContent = nameInput.value;
   profileActivity.textContent = activityInput.value;
@@ -76,8 +79,8 @@ function handleEditProfileFormSubmit (evt) {
 
 // рендеринг карточки
 // создание экземпляра класса Card
-function renderCard (item) {
-  const card = new Card(item, '.card-template');
+function renderCard(item) {
+  const card = new Card(item, handleCardClick, '.card-template');
   const cardElement = card.generateCard();
 
   document.querySelector('.cards').prepend(cardElement);
@@ -91,7 +94,7 @@ initialCards.forEach(item => {
 // добавление карточки с последующим закрытием попапа (addCardPopup)
   // поля ввода обнуляются после закрытия
   // кнопка отправки становится неактивной
-function handleAddCardFormSubmit (evt) {
+function handleAddCardFormSubmit(evt) {
   evt.preventDefault();
 
   renderCard({
