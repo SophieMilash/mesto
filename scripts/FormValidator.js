@@ -47,7 +47,7 @@ export default class FormValidator {
 
   // блокировка кнопки отправки
   // если есть хотя бы один невалидный инпут
-  _toggleButtonState() {
+  toggleButtonState() {
     if (this._hasInvalidInput()) {
       this._buttonElement.setAttribute('disabled', true);
       this._buttonElement.classList.add(this._inactiveButtonClass);
@@ -59,12 +59,12 @@ export default class FormValidator {
 
   _setEventListeners() {
     // блокировка кнопки отправки до начала ввода данных
-    this._toggleButtonState();
+    this.toggleButtonState();
 
     this._inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
         this._checkInputValidity(inputElement);
-        this._toggleButtonState();
+        this.toggleButtonState();
       });
     });
   }
@@ -73,6 +73,7 @@ export default class FormValidator {
     this._setEventListeners();
   }
 
+  // очистка ошибок
   removeInputErrors() {
     this._inputList.forEach(inputElement => {
       if (!inputElement.validity.valid) {

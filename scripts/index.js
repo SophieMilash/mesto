@@ -4,7 +4,41 @@ import FormValidator from './FormValidator.js';
 
 // создание экземпляров класса FormValidator
 const editProfileFormValidator = new FormValidator(validationConfig, editPopupConfig.editProfileForm);
+editProfileFormValidator.enableValidation();
 const addCardFormValidator = new FormValidator(validationConfig, addPopupConfig.addCardForm);
+addCardFormValidator.enableValidation();
+
+// открытие попапа
+function openPopup(popup) {
+  popup.classList.add('popup_opened');
+
+  document.addEventListener('click', closePopupByOverlay);
+  document.addEventListener('keydown', closePopupByEsc);
+}
+
+function openEditProfilePopup() {
+  editProfileFormValidator.removeInputErrors();
+  editPopupConfig.nameInput.value = editPopupConfig.profileName.textContent;
+  editPopupConfig.activityInput.value = editPopupConfig.profileActivity.textContent;
+
+  openPopup(editPopupConfig.editProfilePopup);
+};
+
+function openAddCardPopup() {
+  addCardFormValidator.toggleButtonState();
+  addCardFormValidator.removeInputErrors();
+  addPopupConfig.addCardForm.reset();
+
+  openPopup(addPopupConfig.addCardPopup);
+}
+
+function openImagePopup(link, name) {
+  imagePopupConfig.imagePopupImage.src = link;
+  imagePopupConfig.imagePopupImage.alt = name;
+  imagePopupConfig.imagePopupCaption.textContent = name;
+
+  openPopup(imagePopupConfig.imagePopup);
+};
 
 // возможность закрытия попапа нажатием на Esc
 function closePopupByEsc(evt) {
@@ -22,42 +56,10 @@ function closePopupByOverlay(evt) {
   }
 }
 
-// открытие попапа
-function openPopup(popup) {
-  popup.classList.add('popup_opened');
-
-  document.addEventListener('click', closePopupByOverlay);
-  document.addEventListener('keydown', closePopupByEsc);
-}
-
-function openEditProfilePopup() {
-  editProfileFormValidator.enableValidation();
-  editProfileFormValidator.removeInputErrors();
-  editPopupConfig.nameInput.value = editPopupConfig.profileName.textContent;
-  editPopupConfig.activityInput.value = editPopupConfig.profileActivity.textContent;
-
-  openPopup(editPopupConfig.editProfilePopup);
-};
-
-function openAddCardPopup() {
-  addCardFormValidator.enableValidation();
-  addCardFormValidator.removeInputErrors();
-  addPopupConfig.addCardForm.reset();
-
-  openPopup(addPopupConfig.addCardPopup);
-}
-
-function openImagePopup(link, name) {
-  imagePopupConfig.imagePopupImage.src = link;
-  imagePopupConfig.imagePopupImage.alt = name;
-  imagePopupConfig.imagePopupCaption.textContent = name;
-
-  openPopup(imagePopupConfig.imagePopup);
-};
-
 // закрытие попапа
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('click', closePopupByOverlay);
   document.removeEventListener('keydown', closePopupByEsc);
 }
 
