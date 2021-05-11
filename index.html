@@ -9,7 +9,7 @@
 </head>
 <body class="page">
   <header class="header page__section page__section_place_header">
-    <a href="#" target="_self">
+    <a href="#" target="_self" tabindex="-1">
       <img src="./images/icons/logo.svg" alt="Логотип Mesto Russia" class="header__logo">
     </a>
   </header>
@@ -36,9 +36,9 @@
       <form class="form" name="edit" novalidate>
         <fieldset class="form__profile-info">
           <legend class="form__title">Редактировать профиль</legend>
-          <input type="text" name="name" id="name-input" value="" minlength="2" maxlength="40" required class="form__input form__input_type_name">
+          <input type="text" name="name" id="name-input" value="" minlength="2" maxlength="40" required class="form__input form__input_type_name"  placeholder="Имя">
           <span class="form__input-error name-input-error">Вы пропустили это поле.</span>
-          <input type="text" name="activity" id="activity-input" value="" minlength="2" maxlength="200" required class="form__input form__input_type_activity">
+          <input type="text" name="activity" id="activity-input" value="" minlength="2" maxlength="200" required class="form__input form__input_type_activity" placeholder="О себе">
           <span class="form__input-error activity-input-error">Вы пропустили это поле.</span>
           <button type="submit" name="submit" class="button button_action_submit form__button">Сохранить</button>
         </fieldset>
@@ -77,10 +77,10 @@
       <div class="card__image-wrap">
         <img src="#" alt="Изображение карточки" class="card__image">
       </div>
-      <button type="button" aria-label="Удалить" title="Удалить" class="button button_action_delete card__delete-button"></button>
+      <button type="button" aria-label="Удалить" title="Удалить" class="button button_action_delete card__delete-button" tabindex="-1"></button>
       <div class="card__info">
         <h2 class="card__title"></h2>
-        <button type="button" aria-label="Нравится" class="button button_action_like card__like-button"></button>
+        <button type="button" aria-label="Нравится" class="button button_action_like card__like-button" tabindex="-1"></button>
       </div>
     </article>
   </template>

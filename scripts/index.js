@@ -14,12 +14,16 @@ function openPopup(popup) {
 
   document.addEventListener('click', closePopupByOverlay);
   document.addEventListener('keydown', closePopupByEsc);
+
+
 }
 
 function openEditProfilePopup() {
   editProfileFormValidator.removeInputErrors();
   editPopupConfig.nameInput.value = editPopupConfig.profileName.textContent;
   editPopupConfig.activityInput.value = editPopupConfig.profileActivity.textContent;
+
+  addPopupConfig.openAddCardPopupBtn.setAttribute('tabindex', -1);
 
   openPopup(editPopupConfig.editProfilePopup);
 };
@@ -28,6 +32,8 @@ function openAddCardPopup() {
   addCardFormValidator.toggleButtonState();
   addCardFormValidator.removeInputErrors();
   addPopupConfig.addCardForm.reset();
+
+  editPopupConfig.openEditProfilePopupBtn.setAttribute('tabindex', -1);
 
   openPopup(addPopupConfig.addCardPopup);
 }
@@ -61,6 +67,9 @@ function closePopup(popup) {
   popup.classList.remove('popup_opened');
   document.removeEventListener('click', closePopupByOverlay);
   document.removeEventListener('keydown', closePopupByEsc);
+
+  addPopupConfig.openAddCardPopupBtn.removeAttribute('tabindex');
+  editPopupConfig.openEditProfilePopupBtn.removeAttribute('tabindex');
 }
 
 // внесение изменений в профиль с последующим закрытием попапа (editProfilePopup)
