@@ -1,6 +1,6 @@
-import { initialCards, validationConfig, editPopupConfig, addPopupConfig, imagePopupConfig } from './constants.js';
-import Card from './Card.js';
-import FormValidator from './FormValidator.js';
+import { initialCards, validationConfig, editPopupConfig, addPopupConfig, imagePopupConfig } from './utils/constants.js';
+import Card from './components/Card.js';
+import FormValidator from './components/FormValidator.js';
 
 // создание экземпляров класса FormValidator
 const editProfileFormValidator = new FormValidator(validationConfig, editPopupConfig.editProfileForm);
