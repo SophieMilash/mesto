@@ -1,3 +1,4 @@
+import '../pages/index.css';
 import { initialCards, validationConfig, editPopupConfig, addPopupConfig, imagePopupConfig } from './utils/constants.js';
 import Card from './components/Card.js';
 import FormValidator from './components/FormValidator.js';
