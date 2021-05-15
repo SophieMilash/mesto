@@ -52,42 +52,55 @@ const userInfo = new UserInfo({
   activity: editPopupConfig.profileActivity
 });
 
+// создание экземпляров класса PopupWithForm
+const editProfilePopup = new PopupWithForm(editPopupConfig.editProfilePopup, {
+  formSubmitHandler: (data) => {
+    userInfo.setUserInfo({
+      nameInput: datd.name,
+      activityInput: data.activity
+    });
+    editProfilePopup.close();
+  }
+});
+
+const addCardPopup = new PopupWithForm(addPopupConfig.addCardPopup, {
+  formSubmitHandler: (data) => {
+    const card = renderCard({
+      name: data.name,
+      link: data.link
+    });
+    cardList.addItem(card);
+    addCardPopup.close();
+  }
+});
+
 // создание экземпляра класса PopupWithImage
 const imagePopup = new PopupWithImage(imagePopupConfig.imagePopup);
+
+editProfilePopup.setEventListeners();
+addCardPopup.setEventListeners();
 imagePopup.setEventListeners();
 
-// создание экземпляров класса PopupWithForm
-const editProfilePopup = new PopupWithForm(editPopupConfig.editProfilePopup, handleEditProfileFormSubmit(editPopupConfig));
-const addCardPopup = new PopupWithForm(addPopupConfig.addCardPopup, handleAddCardFormSubmit(addPopupConfig));
 
 
-
-
-function handleEditProfileFormSubmit({ nameInput, activityInput }) {
-  userInfo.setUserInfo(editPopupConfig);
-  profileName.textContent = nameInput.value;
-  profileActivity.textContent = activityInput.value;
-
-}
-
-function handleAddCardFormSubmit({ titleInput, linkInput }) {
-  //evt.preventDefault();
-
-  renderCard({
-    name: titleInput.value,
-    link: linkInput.value
+function openEditProfilePopup() {
+  userInfo.getUserInfo({
+    name: editPopupConfig.nameInput,
+    activity: editPopupConfig.activityInput
   });
-  //addCardForm.reset();
-  //closePopup(addCardPopup);
+
+  editProfilePopup.open();
 }
 
-// открытие / закрытие editProfilePopup
-editPopupConfig.openEditProfilePopupBtn.addEventListener('click', () => openEditProfilePopup(editPopupConfig));
-editPopupConfig.closeEditProfilePopupBtn.addEventListener('click', () => closePopup(editPopupConfig.editProfilePopup));
-editPopupConfig.editProfileForm.addEventListener('submit', () => handleEditProfileFormSubmit(editPopupConfig));
+function openAddCardPopup() {
+  addCardFormValidator.removeInputErrors();
+  addCardFormValidator.toggleButtonState();
 
-// открытие / закрытие addCardPopup
-addPopupConfig.openAddCardPopupBtn.addEventListener('click', () => openAddCardPopup(addPopupConfig));
-addPopupConfig.closeAddCardPopupBtn.addEventListener('click', () => closePopup(addPopupConfig.addCardPopup));
-addPopupConfig.addCardForm.addEventListener('submit', () => handleAddCardFormSubmit(addPopupConfig));
+  addCardPopup.open();
+}
+
+
+editPopupConfig.openEditProfilePopupBtn.addEventListener('click', openEditProfilePopup);
+addPopupConfig.openAddCardPopupBtn.addEventListener('click', openAddCardPopup);
+
 

@@ -5,11 +5,15 @@ export default class UserInfo {
   }
 
   getUserInfo() {
-
+    const userData = {
+      name: this._name.textContent,
+      activity: this._activity.textContent
+    };
+    return userData;
   }
 
-  setUserInfo(data) {
-    this._name.textContent = data.value;
-    this._activity.textContent = data.value;
+  setUserInfo({nameInput, activityInput}) {
+    nameInput.value = this._name.textContent;
+    activityInput.value = this._activity.textContent;
   }
 }

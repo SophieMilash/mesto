@@ -1,38 +1,34 @@
 import Popup from './Popup.js';
 
 export default class PopupWithForm extends Popup {
-  constructor(popupSelector, formSubmitHandler) {
+  constructor(popupSelector, {formSubmitHandler}) {
     super(popupSelector);
     this._formSubmitHandler = formSubmitHandler;
-    this._form = this._popup.querySelector('.form');
+    this._form = this._popupSelector.querySelector('.form');
   }
 
   _getInputValues() {
     const inputValues = {};
-    const formInputs = Array.from(this._form.querySelectorAll('.form__input'));
+    const formInputs = [...this._form.querySelectorAll('.form__input')];
+
     formInputs.forEach(input => {
       inputValues[input.name] = input.value;
     });
     return inputValues;
   }
 
-  _setEventListeners() {
-    super._setEventListeners();
+  setEventListeners() {
+    super.setEventListeners();
 
     this._form.addEventListener('submit', (evt) => {
       evt.preventDefault();
-      const data = this._getInputValues();
-      this._formSubmitHandler(data);
+      const inputData = this._getInputValues();
+      this._formSubmitHandler(inputData);
     });
   }
 
   close() {
-    super.close();
     this._form.reset();
+    super.close();
   }
 }
-
-/* const editProfilePopup = new PopupWithForm(editPopupConfig.editProfilePopup, handleEditProfileFormSubmit({ editPopupConfig }));
-const addCardPopup = new PopupWithForm(addPopupConfig.addCardPopup, handleAddCardFormSubmit({ addPopupConfig }));
-
-editProfilePopup */
