@@ -1,5 +1,6 @@
 import './index.css';
 import { initialCards, validationConfig, editPopupConfig, addPopupConfig, imagePopupConfig } from '../scripts/utils/constants.js';
+import { openPopup, closePopup } from '../scripts/utils/utils.js';
 import Card from '../scripts/components/Card.js';
 import FormValidator from '../scripts/components/FormValidator.js';
 
@@ -9,28 +10,21 @@ editProfileFormValidator.enableValidation();
 const addCardFormValidator = new FormValidator(validationConfig, addPopupConfig.addCardForm);
 addCardFormValidator.enableValidation();
 
-// открытие попапа
-function openPopup(popup) {
-  popup.classList.add('popup_opened');
 
-  document.addEventListener('click', closePopupByOverlay);
-  document.addEventListener('keydown', closePopupByEsc);
-}
-
-function openEditProfilePopup() {
+function openEditProfilePopup({ nameInput, activityInput, profileName, profileActivity, editProfilePopup }) {
   editProfileFormValidator.removeInputErrors();
-  editPopupConfig.nameInput.value = editPopupConfig.profileName.textContent;
-  editPopupConfig.activityInput.value = editPopupConfig.profileActivity.textContent;
+  nameInput.value = profileName.textContent;
+  activityInput.value = profileActivity.textContent;
 
-  openPopup(editPopupConfig.editProfilePopup);
+  openPopup(editProfilePopup);
 };
 
-function openAddCardPopup() {
+function openAddCardPopup({ addCardForm, addCardPopup }) {
   addCardFormValidator.toggleButtonState();
   addCardFormValidator.removeInputErrors();
-  addPopupConfig.addCardForm.reset();
+  addCardForm.reset();
 
-  openPopup(addPopupConfig.addCardPopup);
+  openPopup(addCardPopup);
 }
 
 function openImagePopup(link, name) {
@@ -41,35 +35,13 @@ function openImagePopup(link, name) {
   openPopup(imagePopupConfig.imagePopup);
 };
 
-// возможность закрытия попапа нажатием на Esc
-function closePopupByEsc(evt) {
-  if (evt.key === 'Escape') {
-    const popup = document.querySelector('.popup_opened');
-    closePopup(popup);
-  }
-}
-
-// возможность закрытия попапа кликом на оверлей
-function closePopupByOverlay(evt) {
-  if (evt.target.classList.contains('popup')) {
-    const popup = document.querySelector('.popup_opened');
-    closePopup(popup);
-  }
-}
-
-// закрытие попапа
-function closePopup(popup) {
-  popup.classList.remove('popup_opened');
-  document.removeEventListener('click', closePopupByOverlay);
-  document.removeEventListener('keydown', closePopupByEsc);
-}
 
 // внесение изменений в профиль с последующим закрытием попапа (editProfilePopup)
-function handleEditProfileFormSubmit(evt) {
+function handleEditProfileFormSubmit({ profileName, nameInput, profileActivity, activityInput, editProfilePopup }, evt) {
   evt.preventDefault();
-  editPopupConfig.profileName.textContent = editPopupConfig.nameInput.value;
-  editPopupConfig.profileActivity.textContent = editPopupConfig.activityInput.value;
-  closePopup(editPopupConfig.editProfilePopup);
+  profileName.textContent = nameInput.value;
+  profileActivity.textContent = activityInput.value;
+  closePopup(editProfilePopup);
 }
 
 // рендеринг карточки
@@ -99,12 +71,12 @@ function handleAddCardFormSubmit(evt) {
 }
 
 // открытие / закрытие editProfilePopup
-editPopupConfig.openEditProfilePopupBtn.addEventListener('click', openEditProfilePopup);
+editPopupConfig.openEditProfilePopupBtn.addEventListener('click', () => openEditProfilePopup(editPopupConfig));
 editPopupConfig.closeEditProfilePopupBtn.addEventListener('click', () => closePopup(editPopupConfig.editProfilePopup));
-editPopupConfig.editProfileForm.addEventListener('submit', handleEditProfileFormSubmit);
+editPopupConfig.editProfileForm.addEventListener('submit', () => handleEditProfileFormSubmit(editPopupConfig));
 
 // открытие / закрытие addCardPopup
-addPopupConfig.openAddCardPopupBtn.addEventListener('click', openAddCardPopup);
+addPopupConfig.openAddCardPopupBtn.addEventListener('click', () => openAddCardPopup(addPopupConfig));
 addPopupConfig.closeAddCardPopupBtn.addEventListener('click', () => closePopup(addPopupConfig.addCardPopup));
 addPopupConfig.addCardForm.addEventListener('submit', handleAddCardFormSubmit);
 
