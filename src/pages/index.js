@@ -7,13 +7,11 @@ import PopupWithForm from '../scripts/components/PopupWithForm.js';
 import Card from '../scripts/components/Card.js';
 import FormValidator from '../scripts/components/FormValidator.js';
 
-// создание экземпляров класса FormValidator
 const editProfileFormValidator = new FormValidator(validationConfig, editPopupConfig.editProfileForm);
 editProfileFormValidator.enableValidation();
 const addCardFormValidator = new FormValidator(validationConfig, addPopupConfig.addCardForm);
 addCardFormValidator.enableValidation();
 
-// создание экземпляра класса Section
 const cardList = new Section({
   items: initialCards,
   renderer: (item) => {
@@ -25,19 +23,14 @@ const cardList = new Section({
 
 cardList.renderItems();
 
-// создание экземпляра класса UserInfo
 const userInfo = new UserInfo({
   name: editPopupConfig.profileName,
   activity: editPopupConfig.profileActivity
 });
 
-// создание экземпляров класса PopupWithForm
 const editProfilePopup = new PopupWithForm(editPopupConfig.editProfilePopup, {
   formSubmitHandler: (data) => {
-    userInfo.setUserInfo({
-      nameInput: datd.name,
-      activityInput: data.activity
-    });
+    userInfo.setUserInfo(data);
     editProfilePopup.close();
   }
 });
@@ -53,11 +46,9 @@ const addCardPopup = new PopupWithForm(addPopupConfig.addCardPopup, {
   }
 });
 
-// создание экземпляра класса PopupWithImage
 const imagePopup = new PopupWithImage(imagePopupConfig.imagePopup);
 
-// рендеринг карточки
-// создание экземпляра класса Card
+
 function renderCard(item) {
   const card = new Card({
     name: item.name,
@@ -76,11 +67,12 @@ function renderCard(item) {
   return cardElement;
 }
 
-function openEditProfilePopup() {
-  userInfo.getUserInfo({
-    name: editPopupConfig.nameInput,
-    activity: editPopupConfig.activityInput
-  });
+function openEditProfilePopup({ nameInput, activityInput }) {
+  editProfileFormValidator.removeInputErrors();
+
+  const userData = userInfo.getUserInfo();
+  nameInput.value = userData.name;
+  activityInput.value = userData.activity;
 
   editProfilePopup.open();
 }
@@ -93,7 +85,7 @@ function openAddCardPopup() {
 }
 
 
-editPopupConfig.openEditProfilePopupBtn.addEventListener('click', openEditProfilePopup);
+editPopupConfig.openEditProfilePopupBtn.addEventListener('click', () => openEditProfilePopup(editPopupConfig));
 addPopupConfig.openAddCardPopupBtn.addEventListener('click', openAddCardPopup);
 editProfilePopup.setEventListeners();
 addCardPopup.setEventListeners();
