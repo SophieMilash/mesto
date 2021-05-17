@@ -38,7 +38,7 @@ const editProfilePopup = new PopupWithForm(editPopupConfig.editProfilePopup, {
 const addCardPopup = new PopupWithForm(addPopupConfig.addCardPopup, {
   formSubmitHandler: (data) => {
     const card = renderCard({
-      name: data.name,
+      name: data.title,
       link: data.link
     });
     cardList.addItem(card);
