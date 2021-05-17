@@ -26,6 +26,11 @@ const initialCards = [
   }
 ];
 
+const templateConfig = {
+  cardsContainerSelector: '.cards',
+  cardSelector: '.card-template'
+}
+
 // объект с настройками валидации
 const validationConfig = {
   formSelector: '.form',
@@ -59,4 +64,4 @@ const imagePopupConfig = {
   imagePopup: document.querySelector('.popup_type_image'),
 }
 
-export { initialCards, validationConfig, editPopupConfig, addPopupConfig, imagePopupConfig };
+export { initialCards, templateConfig, validationConfig, editPopupConfig, addPopupConfig, imagePopupConfig };

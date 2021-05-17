@@ -1,5 +1,5 @@
 import './index.css';
-import { initialCards, validationConfig, editPopupConfig, addPopupConfig, imagePopupConfig } from '../scripts/utils/constants.js';
+import { initialCards, templateConfig, validationConfig, editPopupConfig, addPopupConfig, imagePopupConfig } from '../scripts/utils/constants.js';
 import Section from '../scripts/components/Section.js';
 import UserInfo from '../scripts/components/UserInfo.js';
 import PopupWithImage from '../scripts/components/PopupWithImage.js';
@@ -19,7 +19,7 @@ const cardList = new Section({
 
     cardList.addItem(card);
   }
-}, '.cards');
+}, templateConfig.cardsContainerSelector);
 
 cardList.renderItems();
 
@@ -60,7 +60,7 @@ function renderCard(item) {
         link: item.link
       });
     }
-  }, '.card-template');
+  }, templateConfig.cardSelector);
   const cardElement = card.generateCard();
 
   cardList.addItem(cardElement);
