@@ -1,11 +1,27 @@
 import './index.css';
 import { initialCards, templateConfig, validationConfig, editPopupConfig, addPopupConfig, imagePopupConfig } from '../scripts/utils/constants.js';
+import Api from '../scripts/components/Api.js';
 import Section from '../scripts/components/Section.js';
 import UserInfo from '../scripts/components/UserInfo.js';
 import PopupWithImage from '../scripts/components/PopupWithImage.js';
 import PopupWithForm from '../scripts/components/PopupWithForm.js';
 import Card from '../scripts/components/Card.js';
 import FormValidator from '../scripts/components/FormValidator.js';
+
+
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-24',
+  headers: {
+    authorization: 'c72c9866-e9ca-4f90-b055-72d87299b8be',
+    'Content-Type': 'application/json'
+  }
+});
+
+/* const cards = fetch('')
+  .then(result => result.json())
+  .then(data => console.log(data))
+  .catch(e => console.log('e:', e)) */
+
 
 const editProfileFormValidator = new FormValidator(validationConfig, editPopupConfig.editProfileForm);
 editProfileFormValidator.enableValidation();
