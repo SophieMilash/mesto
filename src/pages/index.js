@@ -1,10 +1,11 @@
 import './index.css';
-import { initialCards, templateConfig, validationConfig, editPopupConfig, addPopupConfig, imagePopupConfig } from '../scripts/utils/constants.js';
+import { initialCards, templateConfig, validationConfig, editPopupConfig, addPopupConfig, imagePopupConfig, deletionConfirmConfig } from '../scripts/utils/constants.js';
 import Api from '../scripts/components/Api.js';
 import Section from '../scripts/components/Section.js';
 import UserInfo from '../scripts/components/UserInfo.js';
 import PopupWithImage from '../scripts/components/PopupWithImage.js';
 import PopupWithForm from '../scripts/components/PopupWithForm.js';
+import PopupWithConfirmation from '../scripts/components/PopupWithConfirmation.js';
 import Card from '../scripts/components/Card.js';
 import FormValidator from '../scripts/components/FormValidator.js';
 
@@ -64,6 +65,8 @@ const addCardPopup = new PopupWithForm(addPopupConfig.addCardPopup, {
 
 const imagePopup = new PopupWithImage(imagePopupConfig.imagePopup);
 
+const deletionConfirmPopup = new PopupWithConfirmation(deletionConfirmConfig.deletionConfirmPopup, deletionConfirmConfig.deletionConfirmBtn);
+
 
 function renderCard(item) {
   const card = new Card({
@@ -75,6 +78,10 @@ function renderCard(item) {
         name: item.name,
         link: item.link
       });
+    }
+  }, {
+    handleCardDelete: () => {
+      deletionConfirmPopup.open();
     }
   }, templateConfig.cardSelector);
   const cardElement = card.generateCard();
@@ -106,3 +113,4 @@ addPopupConfig.openAddCardPopupBtn.addEventListener('click', openAddCardPopup);
 editProfilePopup.setEventListeners();
 addCardPopup.setEventListeners();
 imagePopup.setEventListeners();
+deletionConfirmPopup.setEventListeners();

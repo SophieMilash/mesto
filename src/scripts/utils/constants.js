@@ -64,4 +64,10 @@ const imagePopupConfig = {
   imagePopup: document.querySelector('.popup_type_image'),
 }
 
-export { initialCards, templateConfig, validationConfig, editPopupConfig, addPopupConfig, imagePopupConfig };
+// данные попапа deletionConfirmPopup и формы addCardForm
+const deletionConfirmConfig = {
+  deletionConfirmPopup: document.querySelector('.popup_type_deletion-confirm'),
+  deletionConfirmBtn: document.querySelector('.button_action_confirm')
+}
+
+export { initialCards, templateConfig, validationConfig, editPopupConfig, addPopupConfig, imagePopupConfig, deletionConfirmConfig };
