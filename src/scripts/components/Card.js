@@ -17,10 +17,10 @@ export default class Card {
     return cardElement;
   }
 
- /*  handleDeleteCard() {
+  handleDeleteCard() {
     this._element.remove();
     this._element = null;
-  } */
+  }
 
   _handleLikeCard() {
     this._likeCardButton.classList.toggle('card__like-button_active');

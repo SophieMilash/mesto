@@ -18,10 +18,15 @@ const api = new Api({
   }
 });
 
-/* const cards = fetch('')
-  .then(result => result.json())
-  .then(data => console.log(data))
-  .catch(e => console.log('e:', e)) */
+let user = {};
+
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then(([userInfo, cards]) => {
+    user = userInfo.data;
+    cardList.renderItems(cards);
+  })
+  .catch((err) => console.log(err));
+
 
 
 const editProfileFormValidator = new FormValidator(validationConfig, editPopupConfig.editProfileForm);
@@ -38,7 +43,7 @@ const cardList = new Section({
   }
 }, templateConfig.cardsContainerSelector);
 
-cardList.renderItems();
+// cardList.renderItems();
 
 const userInfo = new UserInfo({
   name: editPopupConfig.profileName,
@@ -48,17 +53,32 @@ const userInfo = new UserInfo({
 const editProfilePopup = new PopupWithForm(editPopupConfig.editProfilePopup, {
   formSubmitHandler: (data) => {
     userInfo.setUserInfo(data);
-    editProfilePopup.close();
+
+    api.setUserInfo({
+      name: data.profileName,
+      activity: data.profileActivity
+    })
+      .then(() => editProfilePopup.close())
+      .catch((err) => console.log(err));
   }
 });
 
 const addCardPopup = new PopupWithForm(addPopupConfig.addCardPopup, {
   formSubmitHandler: (data) => {
-    const card = renderCard({
+    api.createCard({
       name: data.title,
       link: data.link
-    });
-    cardList.addItem(card);
+    })
+      .then((result) => {
+        cardList.addItem(createCard({...result.data}));
+      })
+      .catch((err) => console.log(err));
+
+    // const card = renderCard({
+    //   name: data.title,
+    //   link: data.link
+    // });
+    // cardList.addItem(card);
     addCardPopup.close();
   }
 });
