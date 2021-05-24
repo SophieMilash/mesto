@@ -19,6 +19,7 @@ const api = new Api({
 });
 
 let user = {};
+let userId = {};
 
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([userInfo, cards]) => {
@@ -26,7 +27,6 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     cardList.renderItems(cards);
   })
   .catch((err) => console.log(err));
-
 
 
 const editProfileFormValidator = new FormValidator(validationConfig, editPopupConfig.editProfileForm);
@@ -85,13 +85,23 @@ const addCardPopup = new PopupWithForm(addPopupConfig.addCardPopup, {
 
 const imagePopup = new PopupWithImage(imagePopupConfig.imagePopup);
 
-const deletionConfirmPopup = new PopupWithConfirmation(deletionConfirmConfig.deletionConfirmPopup, deletionConfirmConfig.deletionConfirmBtn);
+const deletionConfirmPopup = new PopupWithConfirmation(deletionConfirmConfig.deletionConfirmPopup, deletionConfirmConfig.deletionConfirmBtn, {
+  actionFn: (data) => {
+    api.deleteCard(data)
+        .then(() => {
+          evtCard.target.closest('.card').remove();
+          deletionConfirmPopup.close();
+        })
+        .catch((err) => console.log(err));
+  }
+});
 
 
 function renderCard(item) {
   const card = new Card({
     name: item.name,
-    link: item.link
+    link: item.link,
+    _id: item._id
   }, {
     handleCardClick: () => {
       imagePopup.open({
@@ -100,8 +110,15 @@ function renderCard(item) {
       });
     }
   }, {
-    handleCardDelete: () => {
+    /* handleCardDelete: () => {
       deletionConfirmPopup.open();
+    } */
+    handleCardDelete: () => {
+      deletionConfirmPopup.open(() => {
+        api.deleteCard(card.getId())
+          .then(() => card.handleDeleteCard())
+          .catch((err) => console.log(err));
+      });
     }
   }, templateConfig.cardSelector);
   const cardElement = card.generateCard();
