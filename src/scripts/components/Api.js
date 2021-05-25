@@ -35,20 +35,20 @@ export default class Ari {
       .then(result => result.ok ? result.json() : Promise.reject(`Ошибка: ${result.status}`));
   }
 
-  createCard(data) {
+  createCard(name, link) {
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
-        name: data.name,
-        link: data.link,
+        name: name,
+        link: link,
       })
     })
       .then(result => result.ok ? result.json() : Promise.reject(`Ошибка: ${result.status}`));
   }
 
-  deleteCard(data) {
-    return fetch(`${this._baseUrl}/cards/${data._id}`, {
+  deleteCard(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
       headers: this._headers
     })
