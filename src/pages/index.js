@@ -19,10 +19,7 @@ const api = new Api({
 });
 
 let userId = {};
-const userInfo = new UserInfo({
-  name: editPopupConfig.profileName,
-  activity: editPopupConfig.profileActivity
-});
+const userInfo = new UserInfo(editPopupConfig.profileName, editPopupConfig.profileActivity);
 
 api.getUserInfo()
   .then((data) => {
@@ -30,6 +27,16 @@ api.getUserInfo()
     userInfo.setUserInfo(data);
   })
     .catch((err) => console.log(err));
+
+/* function createCardList(cards) {
+  const cardList = new Section({
+    items: cards,
+    renderer: (item) => {
+      const card = renderCard(item);
+      cardList.addItem(card);
+    }
+  }, templateConfig.cardsContainerSelector);
+} */
 
 api.getInitialCards()
   .then((data) => {
@@ -53,10 +60,12 @@ addCardFormValidator.enableValidation();
 
 const editProfilePopup = new PopupWithForm(editPopupConfig.editProfilePopup, {
   formSubmitHandler: (data) => {
-    api.setUserInfo(data.name, data.activity)
+    api.setUserInfo(data.name, data.about)
       .then((data) => {
         userInfo.setUserInfo(data);
-        //editProfilePopup.close()
+      })
+      .then(() => {
+        editProfilePopup.close();
       })
       .catch((err) => console.log(err));
   }
@@ -64,21 +73,26 @@ const editProfilePopup = new PopupWithForm(editPopupConfig.editProfilePopup, {
 
 const addCardPopup = new PopupWithForm(addPopupConfig.addCardPopup, {
   formSubmitHandler: (data) => {
-    api.createCard({
-      name: data.title,
-      link: data.link
-    })
+    api.createCard(data.title, data.link)
       .then((result) => {
-        cardList.addItem(createCard({...result.data}));
+
+        // TODO
+        const cardList = new Section({
+          items: data,
+          renderer: (item) => {
+            const card = renderCard(item);
+            cardList.addItem(card);
+          }
+        }, templateConfig.cardsContainerSelector);
+
+        const card = renderCard(result);
+        cardList.addItem(card);
+      })
+      .finally(() => {
+        addCardPopup.close();
       })
       .catch((err) => console.log(err));
 
-    // const card = renderCard({
-    //   name: data.title,
-    //   link: data.link
-    // });
-    // cardList.addItem(card);
-    addCardPopup.close();
   }
 });
 
@@ -88,9 +102,9 @@ const deletionConfirmPopup = new PopupWithConfirmation(deletionConfirmConfig.del
   handleCardDelete: (card) => {
     api.deleteCard(card.getCardId())
         .then(() => {
-          card.deleteCard();
+          card.handleDeleteCard();
         })
-        .then(() => {
+        .finally(() => {
           deletionConfirmPopup.close();
         })
         .catch((err) => console.log(err));
@@ -125,7 +139,7 @@ function openEditProfilePopup({ nameInput, activityInput }) {
 
   const userData = userInfo.getUserInfo();
   nameInput.value = userData.name;
-  activityInput.value = userData.activity;
+  activityInput.value = userData.about;
 
   editProfilePopup.open();
 }
