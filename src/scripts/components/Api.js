@@ -4,35 +4,37 @@ export default class Ari {
     this._headers = headers;
   }
 
+  _checkResponse(result) {
+    if (result.ok) {
+      return result.json();
+    }
+    return Promise.reject(`Ошибка: ${result.status}`);
+  }
+
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers
     })
-      .then(result => result.ok ? result.json() : Promise.reject(`Ошибка: ${result.status}`));
+      .then(this._checkResponse);
   }
 
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers
     })
-      .then(result => {
-        if (result.ok) {
-          return result.json();
-        }
-        return Promise.reject(`Ошибка: ${result.status}`);
-      });
+      .then(this._checkResponse);
   }
 
-  setUserInfo(data) {
+  setUserInfo(name, activity) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
-        name: data.name,
-        about: data.activity
+        name: name,
+        about: activity
       })
     })
-      .then(result => result.ok ? result.json() : Promise.reject(`Ошибка: ${result.status}`));
+      .then(this._checkResponse);
   }
 
   createCard(name, link) {
@@ -44,7 +46,7 @@ export default class Ari {
         link: link,
       })
     })
-      .then(result => result.ok ? result.json() : Promise.reject(`Ошибка: ${result.status}`));
+      .then(this._checkResponse);
   }
 
   deleteCard(cardId) {

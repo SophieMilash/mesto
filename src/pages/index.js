@@ -18,15 +18,31 @@ const api = new Api({
   }
 });
 
-let user = {};
 let userId = {};
+const userInfo = new UserInfo({
+  name: editPopupConfig.profileName,
+  activity: editPopupConfig.profileActivity
+});
 
-Promise.all([api.getUserInfo(), api.getInitialCards()])
-  .then(([userInfo, cards]) => {
-    user = userInfo.data;
-    cardList.renderItems(cards);
+api.getUserInfo()
+  .then((data) => {
+    userId = data._id;
+    userInfo.setUserInfo(data);
   })
-  .catch((err) => console.log(err));
+    .catch((err) => console.log(err));
+
+api.getInitialCards()
+  .then((data) => {
+    const cardList = new Section({
+      items: data,
+      renderer: (item) => {
+        const card = renderCard(item);
+        cardList.addItem(card);
+      }
+    }, templateConfig.cardsContainerSelector);
+    cardList.renderItems();
+  })
+    .catch((err) => console.log(err));
 
 
 const editProfileFormValidator = new FormValidator(validationConfig, editPopupConfig.editProfileForm);
@@ -34,31 +50,14 @@ editProfileFormValidator.enableValidation();
 const addCardFormValidator = new FormValidator(validationConfig, addPopupConfig.addCardForm);
 addCardFormValidator.enableValidation();
 
-const cardList = new Section({
-  items: initialCards,
-  renderer: (item) => {
-    const card = renderCard(item);
-
-    cardList.addItem(card);
-  }
-}, templateConfig.cardsContainerSelector);
-
-// cardList.renderItems();
-
-const userInfo = new UserInfo({
-  name: editPopupConfig.profileName,
-  activity: editPopupConfig.profileActivity
-});
 
 const editProfilePopup = new PopupWithForm(editPopupConfig.editProfilePopup, {
   formSubmitHandler: (data) => {
-    userInfo.setUserInfo(data);
-
-    api.setUserInfo({
-      name: data.profileName,
-      activity: data.profileActivity
-    })
-      .then(() => editProfilePopup.close())
+    api.setUserInfo(data.name, data.activity)
+      .then((data) => {
+        userInfo.setUserInfo(data);
+        //editProfilePopup.close()
+      })
       .catch((err) => console.log(err));
   }
 });
@@ -86,10 +85,12 @@ const addCardPopup = new PopupWithForm(addPopupConfig.addCardPopup, {
 const imagePopup = new PopupWithImage(imagePopupConfig.imagePopup);
 
 const deletionConfirmPopup = new PopupWithConfirmation(deletionConfirmConfig.deletionConfirmPopup, deletionConfirmConfig.deletionConfirmBtn, {
-  actionFn: (data) => {
-    api.deleteCard(data)
+  handleCardDelete: (card) => {
+    api.deleteCard(card.getCardId())
         .then(() => {
-          evtCard.target.closest('.card').remove();
+          card.deleteCard();
+        })
+        .then(() => {
           deletionConfirmPopup.close();
         })
         .catch((err) => console.log(err));
@@ -101,29 +102,21 @@ function renderCard(item) {
   const card = new Card({
     name: item.name,
     link: item.link,
+    owner: item.owner,
     _id: item._id
-  }, {
+  }, userId, {
     handleCardClick: () => {
       imagePopup.open({
         name: item.name,
         link: item.link
       });
-    }
-  }, {
-    /* handleCardDelete: () => {
-      deletionConfirmPopup.open();
-    } */
+    },
     handleCardDelete: () => {
-      deletionConfirmPopup.open(() => {
-        api.deleteCard(card.getId())
-          .then(() => card.handleDeleteCard())
-          .catch((err) => console.log(err));
-      });
+      deletionConfirmPopup.open(card);
     }
   }, templateConfig.cardSelector);
   const cardElement = card.generateCard();
 
-  cardList.addItem(cardElement);
   return cardElement;
 }
 
