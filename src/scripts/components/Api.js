@@ -37,12 +37,12 @@ export default class Ari {
       .then(this._checkResponse);
   }
 
-  setAvatar(link) {
+  setAvatar(data) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
-        avatar: link
+        avatar: data.avatar
       })
     })
       .then(this._checkResponse);

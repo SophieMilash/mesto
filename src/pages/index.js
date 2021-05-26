@@ -10,6 +10,12 @@ import Card from '../scripts/components/Card.js';
 import FormValidator from '../scripts/components/FormValidator.js';
 
 
+let userId = {};
+const userInfo = new UserInfo(editPopupConfig.profileName, editPopupConfig.profileActivity, avatarEditPopupConfig.profileAvatar);
+
+
+/* -получение данных с сервера- */
+
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-24',
   headers: {
@@ -17,10 +23,6 @@ const api = new Api({
     'Content-Type': 'application/json'
   }
 });
-
-let userId = {};
-const userInfo = new UserInfo(editPopupConfig.profileName, editPopupConfig.profileActivity, avatarEditPopupConfig.profileAvatar);
-
 
 api.getUserInfo()
   .then((data) => {
@@ -53,6 +55,8 @@ api.getInitialCards()
     .catch((err) => console.log(err));
 
 
+/* -валидация- */
+
 const editProfileFormValidator = new FormValidator(validationConfig, editPopupConfig.editProfileForm);
 editProfileFormValidator.enableValidation();
 const addCardFormValidator = new FormValidator(validationConfig, addPopupConfig.addCardForm);
@@ -61,6 +65,9 @@ const avatarEditFormValidator = new FormValidator(validationConfig, avatarEditPo
 avatarEditFormValidator.enableValidation();
 
 
+/* -создание попапов- */
+
+  // попап с формой редактирования данных пользователя
 const editProfilePopup = new PopupWithForm(editPopupConfig.editProfilePopup, {
   formSubmitHandler: (data) => {
     api.setUserInfo(data)
@@ -74,25 +81,27 @@ const editProfilePopup = new PopupWithForm(editPopupConfig.editProfilePopup, {
   }
 });
 
+  // попап с формой редактирования аватара
 const avatarEditPopup = new PopupWithForm(avatarEditPopupConfig.avatarEditPopup, {
   formSubmitHandler: (data) => {
-    api.setAvatar(data.link)
+    api.setAvatar(data)
       .then((data) => {
         userInfo.setUserInfo(data);
       })
       .then(() => {
-        editProfilePopup.close();
+        avatarEditPopup.close();
       })
       .catch((err) => console.log(err));
   }
 });
 
+  // попап с формой добавления новой карточки
 const addCardPopup = new PopupWithForm(addPopupConfig.addCardPopup, {
   formSubmitHandler: (data) => {
     api.createCard(data.title, data.link)
       .then((result) => {
 
-        // TODO
+        /* == TODO == */
         const cardList = new Section({
           items: data,
           renderer: (item) => {
@@ -112,8 +121,10 @@ const addCardPopup = new PopupWithForm(addPopupConfig.addCardPopup, {
   }
 });
 
+  // попап с полным изображением
 const imagePopup = new PopupWithImage(imagePopupConfig.imagePopup);
 
+  // попап с запросом на удаление карточки
 const deletionConfirmPopup = new PopupWithConfirmation(deletionConfirmConfig.deletionConfirmPopup, deletionConfirmConfig.deletionConfirmBtn, {
   handleCardDelete: (card) => {
     api.deleteCard(card.getCardId())
@@ -127,6 +138,8 @@ const deletionConfirmPopup = new PopupWithConfirmation(deletionConfirmConfig.del
   }
 });
 
+
+/* -рендеринг карточек- */
 
 function renderCard(item) {
   const card = new Card({
@@ -150,6 +163,9 @@ function renderCard(item) {
   return cardElement;
 }
 
+
+/* -функции открытия попапов- */
+
 function openEditProfilePopup({ nameInput, activityInput }) {
   editProfileFormValidator.removeInputErrors();
 
@@ -162,9 +178,7 @@ function openEditProfilePopup({ nameInput, activityInput }) {
 
 function openAvatarEditPopup({ avatarInput }) {
   avatarEditFormValidator.removeInputErrors();
-
-  const userData = userInfo.getUserInfo();
-  avatarInput.value = userData.link;
+  avatarEditFormValidator.toggleButtonState();
 
   avatarEditPopup.open();
 }
@@ -176,6 +190,8 @@ function openAddCardPopup() {
   addCardPopup.open();
 }
 
+
+/* -добавление обработчиков событий- */
 
 editPopupConfig.openEditProfilePopupBtn.addEventListener('click', () => openEditProfilePopup(editPopupConfig));
 avatarEditPopupConfig.openAvatarEditPopupBtn.addEventListener('click', () => openAvatarEditPopup(avatarEditPopupConfig));
