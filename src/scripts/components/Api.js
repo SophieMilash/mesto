@@ -25,13 +25,24 @@ export default class Ari {
       .then(this._checkResponse);
   }
 
-  setUserInfo(name, about) {
+  setUserInfo(data) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
-        name: name,
-        about: about
+        name: data.name,
+        about: data.about
+      })
+    })
+      .then(this._checkResponse);
+  }
+
+  setAvatar(link) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: link
       })
     })
       .then(this._checkResponse);

@@ -1,31 +1,3 @@
-// массив карточек
-const initialCards = [
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  }
-];
-
 const templateConfig = {
   cardsContainerSelector: '.cards',
   cardSelector: '.card-template'
@@ -52,6 +24,15 @@ const editPopupConfig = {
   profileActivity: document.querySelector('.profile__activity')
 }
 
+// данные попапа avatarEditPopup и формы avatarEditForm
+const avatarEditPopupConfig = {
+  avatarEditPopup: document.querySelector('.popup_type_avatar-edit'),
+  openAvatarEditPopupBtn: document.querySelector('.profile__avatar-edit'),
+  avatarEditForm: document.forms.avatar,
+  avatarInput: document.querySelector('.form__input_type_avatar-link'),
+  profileAvatar: document.querySelector('.profile__avatar')
+}
+
 // данные попапа addCardPopup и формы addCardForm
 const addPopupConfig = {
   addCardPopup: document.querySelector('.popup_type_add-card'),
@@ -70,4 +51,4 @@ const deletionConfirmConfig = {
   deletionConfirmBtn: document.querySelector('.button_action_confirm')
 }
 
-export { initialCards, templateConfig, validationConfig, editPopupConfig, addPopupConfig, imagePopupConfig, deletionConfirmConfig };
+export { templateConfig, validationConfig, editPopupConfig, avatarEditPopupConfig, addPopupConfig, imagePopupConfig, deletionConfirmConfig };

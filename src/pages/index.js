@@ -1,5 +1,5 @@
 import './index.css';
-import { initialCards, templateConfig, validationConfig, editPopupConfig, addPopupConfig, imagePopupConfig, deletionConfirmConfig } from '../scripts/utils/constants.js';
+import { templateConfig, validationConfig, editPopupConfig, avatarEditPopupConfig, addPopupConfig, imagePopupConfig, deletionConfirmConfig } from '../scripts/utils/constants.js';
 import Api from '../scripts/components/Api.js';
 import Section from '../scripts/components/Section.js';
 import UserInfo from '../scripts/components/UserInfo.js';
@@ -19,7 +19,8 @@ const api = new Api({
 });
 
 let userId = {};
-const userInfo = new UserInfo(editPopupConfig.profileName, editPopupConfig.profileActivity);
+const userInfo = new UserInfo(editPopupConfig.profileName, editPopupConfig.profileActivity, avatarEditPopupConfig.profileAvatar);
+
 
 api.getUserInfo()
   .then((data) => {
@@ -56,11 +57,26 @@ const editProfileFormValidator = new FormValidator(validationConfig, editPopupCo
 editProfileFormValidator.enableValidation();
 const addCardFormValidator = new FormValidator(validationConfig, addPopupConfig.addCardForm);
 addCardFormValidator.enableValidation();
+const avatarEditFormValidator = new FormValidator(validationConfig, avatarEditPopupConfig.avatarEditForm);
+avatarEditFormValidator.enableValidation();
 
 
 const editProfilePopup = new PopupWithForm(editPopupConfig.editProfilePopup, {
   formSubmitHandler: (data) => {
-    api.setUserInfo(data.name, data.about)
+    api.setUserInfo(data)
+      .then((data) => {
+        userInfo.setUserInfo(data);
+      })
+      .then(() => {
+        editProfilePopup.close();
+      })
+      .catch((err) => console.log(err));
+  }
+});
+
+const avatarEditPopup = new PopupWithForm(avatarEditPopupConfig.avatarEditPopup, {
+  formSubmitHandler: (data) => {
+    api.setAvatar(data.link)
       .then((data) => {
         userInfo.setUserInfo(data);
       })
@@ -144,6 +160,15 @@ function openEditProfilePopup({ nameInput, activityInput }) {
   editProfilePopup.open();
 }
 
+function openAvatarEditPopup({ avatarInput }) {
+  avatarEditFormValidator.removeInputErrors();
+
+  const userData = userInfo.getUserInfo();
+  avatarInput.value = userData.link;
+
+  avatarEditPopup.open();
+}
+
 function openAddCardPopup() {
   addCardFormValidator.removeInputErrors();
   addCardFormValidator.toggleButtonState();
@@ -153,8 +178,11 @@ function openAddCardPopup() {
 
 
 editPopupConfig.openEditProfilePopupBtn.addEventListener('click', () => openEditProfilePopup(editPopupConfig));
+avatarEditPopupConfig.openAvatarEditPopupBtn.addEventListener('click', () => openAvatarEditPopup(avatarEditPopupConfig));
 addPopupConfig.openAddCardPopupBtn.addEventListener('click', openAddCardPopup);
+
 editProfilePopup.setEventListeners();
+avatarEditPopup.setEventListeners();
 addCardPopup.setEventListeners();
 imagePopup.setEventListeners();
 deletionConfirmPopup.setEventListeners();
