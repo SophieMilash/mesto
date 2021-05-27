@@ -98,7 +98,7 @@ const avatarEditPopup = new PopupWithForm(avatarEditPopupConfig.avatarEditPopup,
   // попап с формой добавления новой карточки
 const addCardPopup = new PopupWithForm(addPopupConfig.addCardPopup, {
   formSubmitHandler: (data) => {
-    api.createCard(data.title, data.link)
+    api.createCard(data)
       .then((result) => {
 
         /* == TODO == */
@@ -141,25 +141,45 @@ const deletionConfirmPopup = new PopupWithConfirmation(deletionConfirmConfig.del
 
 /* -рендеринг карточек- */
 
-function renderCard(item) {
-  const card = new Card({
-    name: item.name,
-    link: item.link,
-    owner: item.owner,
-    _id: item._id
-  }, userId, {
+function renderCard(data) {
+  const card = new Card(data, templateConfig.cardSelector, userId, {
     handleCardClick: () => {
       imagePopup.open({
-        name: item.name,
-        link: item.link
+        name: data.name,
+        link: data.link
       });
     },
     handleCardDelete: () => {
       deletionConfirmPopup.open(card);
-    }
-  }, templateConfig.cardSelector);
-  const cardElement = card.generateCard();
+    },
+    /* setLike: (data) => {
+      api.setLikeCard(data._id)
+        .then((data) => {
+          card.countLikes(data);
+        })
+        .catch((err) => console.log(err));
+    },
+    removeLike: (data) => {
+      api.removeLikeCard(data._id)
+        .then((data) => {
+          card.countLikes(data);
+        })
+        .catch((err) => console.log(err));
+    } */
+    handleCardLike: () => {
+      const currentUserLikedCard = card.checkCurrentUserLikes();
+      const requiredApi = currentUserLikedCard
+        ? api.removeLikeCard(card.getCardId())
+        : api.setLikeCard(card.getCardId());
 
+      requiredApi.then(() => {
+        //card.setLikes(data.likes);
+        card.handleLikeCard();
+      })
+        .catch((err) => console.log(err));
+    }
+  });
+  const cardElement = card.generateCard();
   return cardElement;
 }
 

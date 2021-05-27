@@ -48,13 +48,13 @@ export default class Ari {
       .then(this._checkResponse);
   }
 
-  createCard(name, link) {
+  createCard(data) {
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
-        name: name,
-        link: link,
+        name: data.name,
+        link: data.link,
       })
     })
       .then(this._checkResponse);
@@ -66,6 +66,22 @@ export default class Ari {
       headers: this._headers
     })
       .then(result => result.ok ? result.json() : Promise.reject(`Ошибка: ${result.status}`));
+  }
+
+  setLikeCard(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
+      method: 'PUT',
+      headers: this._headers
+    })
+      .then(this._checkResponse);
+  }
+
+  removeLikeCard(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
+      method: 'DELETE',
+      headers: this._headers
+    })
+      .then(this._checkResponse);
   }
 
 }

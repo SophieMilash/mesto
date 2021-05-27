@@ -105,10 +105,13 @@
       <div class="card__image-wrap">
         <img src="#" alt="Изображение карточки" class="card__image">
       </div>
-      <button type="button" aria-label="Удалить" title="Удалить" class="button button_action_delete card__delete-button"></button>
+      <button type="button" aria-label="Удалить" title="Удалить" class="button card__delete-button"></button>
       <div class="card__info">
         <h2 class="card__title"></h2>
-        <button type="button" aria-label="Нравится" class="button button_action_like card__like-button"></button>
+        <div class="card__like-wrap">
+          <button type="button" aria-label="Нравится" class="button card__like-button"></button>
+          <p class="card__like-number">0</p>
+        </div>
       </div>
     </article>
   </template>
