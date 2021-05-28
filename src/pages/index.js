@@ -25,34 +25,15 @@ const api = new Api({
 });
 
 api.getUserInfo()
-  .then((data) => {
-    userId = data._id;
-    userInfo.setUserInfo(data);
+  .then((info) => {
+    userId = info._id;
+    userInfo.setUserInfo(info);
   })
-    .catch((err) => console.log(err));
-
-/* function createCardList(cards) {
-  const cardList = new Section({
-    items: cards,
-    renderer: (item) => {
-      const card = renderCard(item);
-      cardList.addItem(card);
-    }
-  }, templateConfig.cardsContainerSelector);
-} */
+  .catch((err) => console.log(err));
 
 api.getInitialCards()
-  .then((data) => {
-    const cardList = new Section({
-      items: data,
-      renderer: (item) => {
-        const card = renderCard(item);
-        cardList.addItem(card);
-      }
-    }, templateConfig.cardsContainerSelector);
-    cardList.renderItems();
-  })
-    .catch((err) => console.log(err));
+  .then((data) => cardList.renderItems(data))
+  .catch((err) => console.log(err));
 
 
 /* -валидация- */
@@ -69,10 +50,10 @@ avatarEditFormValidator.enableValidation();
 
   // попап с формой редактирования данных пользователя
 const editProfilePopup = new PopupWithForm(editPopupConfig.editProfilePopup, {
-  formSubmitHandler: (data) => {
-    api.setUserInfo(data)
-      .then((data) => {
-        userInfo.setUserInfo(data);
+  formSubmitHandler: (info) => {
+    api.setUserInfo(info)
+      .then((result) => {
+        userInfo.setUserInfo(result);
       })
       .then(() => {
         editProfilePopup.close();
@@ -85,8 +66,8 @@ const editProfilePopup = new PopupWithForm(editPopupConfig.editProfilePopup, {
 const avatarEditPopup = new PopupWithForm(avatarEditPopupConfig.avatarEditPopup, {
   formSubmitHandler: (data) => {
     api.setAvatar(data)
-      .then((data) => {
-        userInfo.setUserInfo(data);
+      .then((result) => {
+        userInfo.setUserInfo(result);
       })
       .then(() => {
         avatarEditPopup.close();
@@ -98,26 +79,15 @@ const avatarEditPopup = new PopupWithForm(avatarEditPopupConfig.avatarEditPopup,
   // попап с формой добавления новой карточки
 const addCardPopup = new PopupWithForm(addPopupConfig.addCardPopup, {
   formSubmitHandler: (data) => {
-    api.createCard(data)
+    api.addCard(data)
       .then((result) => {
-
-        /* == TODO == */
-        const cardList = new Section({
-          items: data,
-          renderer: (item) => {
-            const card = renderCard(item);
-            cardList.addItem(card);
-          }
-        }, templateConfig.cardsContainerSelector);
-
         const card = renderCard(result);
-        cardList.addItem(card);
+        cardList.prependItem(card);
       })
       .finally(() => {
         addCardPopup.close();
       })
       .catch((err) => console.log(err));
-
   }
 });
 
@@ -131,7 +101,7 @@ const deletionConfirmPopup = new PopupWithConfirmation(deletionConfirmConfig.del
         .then(() => {
           card.handleDeleteCard();
         })
-        .finally(() => {
+        .then(() => {
           deletionConfirmPopup.close();
         })
         .catch((err) => console.log(err));
@@ -140,6 +110,13 @@ const deletionConfirmPopup = new PopupWithConfirmation(deletionConfirmConfig.del
 
 
 /* -рендеринг карточек- */
+
+const cardList = new Section({
+  renderer: (item) => {
+    const card = renderCard(item);
+    cardList.appendItem(card);
+  }
+}, templateConfig.cardsContainerSelector);
 
 function renderCard(data) {
   const card = new Card(data, templateConfig.cardSelector, userId, {
@@ -152,31 +129,17 @@ function renderCard(data) {
     handleCardDelete: () => {
       deletionConfirmPopup.open(card);
     },
-    /* setLike: (data) => {
-      api.setLikeCard(data._id)
-        .then((data) => {
-          card.countLikes(data);
-        })
-        .catch((err) => console.log(err));
-    },
-    removeLike: (data) => {
-      api.removeLikeCard(data._id)
-        .then((data) => {
-          card.countLikes(data);
-        })
-        .catch((err) => console.log(err));
-    } */
     handleCardLike: () => {
-      const currentUserLikedCard = card.checkCurrentUserLikes();
+      const currentUserLikedCard =  card.checkLikeStatus();
       const requiredApi = currentUserLikedCard
         ? api.removeLikeCard(card.getCardId())
         : api.setLikeCard(card.getCardId());
 
-      requiredApi.then(() => {
-        //card.setLikes(data.likes);
+      requiredApi.then((data) => {
+        card.setLikes(data.likes);
         card.handleLikeCard();
       })
-        .catch((err) => console.log(err));
+      .catch((err) => console.log(err));
     }
   });
   const cardElement = card.generateCard();

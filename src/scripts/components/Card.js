@@ -29,34 +29,23 @@ export default class Card {
   handleLikeCard() {
     this._likeCardButton.classList.toggle('card__like-button_active');
     this._likeCounter.textContent = this._likes.length;
-    this._showUserLikes(this._userId);
   }
 
-  /* countLikes() {
-    this._likeCounter.textContent = this._likes.length;
-    this._showUserLikes(this._userId);
-  } */
-
-  _showUserLikes() {
-    // this._likes.forEach((like) => {
-    //   if (like._id === this._ownerId) {
-    //     this._likeCardButton.classList.add('card__like-button_active');
-    //   }
-    // })
-
-    if (this.checkCurrentUserLikes(this._userId)) {
-      this._likeCardButton.classList.add('card__like-button_active');
-    } else {
-      this._likeCardButton.classList.remove('card__like-button_active');
-    }
-  }
-
-  checkCurrentUserLikes() {
-    return this._likes.some(like => like._id === this._userId);
+  checkLikeStatus() {
+    const activeLike = this._likeCardButton.classList.contains('card__like-button_active');
+    return activeLike;
   }
 
   setLikes(data) {
     this._likes = data;
+  }
+
+  _showUserLikes() {
+    const newLikes = this._likes.some(like => like._id === this._userId);
+
+    if (newLikes) {
+      this._likeCardButton.classList.add('card__like-button_active');
+    }
   }
 
   _removeDeleteButton() {
@@ -65,8 +54,13 @@ export default class Card {
     }
   }
 
+  handleDeleteCard() {
+    this._element.remove();
+    this._element = null;
+  }
+
   _setEventListeners() {
-    this._deleteCardButton.addEventListener('click', () => this._handleCardDelete(this));
+    this._deleteCardButton.addEventListener('click', () => this._handleCardDelete());
     this._likeCardButton.addEventListener('click', () => this._handleCardLike());
     this._cardImage.addEventListener('click', () => this._handleCardClick(this._name, this._link));
   }
@@ -82,15 +76,11 @@ export default class Card {
     this._cardImage.src = this._link;
     this._cardImage.alt = this._name;
     this._cardTitle.textContent = this._name;
+    this._likeCounter.textContent = this._likes.length;
 
     this._showUserLikes();
     this._removeDeleteButton();
     this._setEventListeners();
     return this._element;
-  }
-
-  handleDeleteCard() {
-    this._element.remove();
-    this._element = null;
   }
 }
