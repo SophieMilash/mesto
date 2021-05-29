@@ -5,12 +5,13 @@ export default class PopupWithConfirmation extends Popup {
     super(popupElement);
     this._confirmButton = confirmButton;
     this._handleCardDelete = handleCardDelete;
+    this._form = this._popupElement.querySelector('.form');
   }
 
   setEventListeners() {
     super.setEventListeners();
 
-    this._popupElement.addEventListener('submit', (evt) => {
+    this._form.addEventListener('submit', (evt) => {
       evt.preventDefault();
 
       this._handleCardDelete(this._card);

@@ -27,6 +27,10 @@
       <button type="button" aria-label="Добавить" title="Добавить" class="button button_action_add-card profile__button"></button>
     </section>
 
+    <section class="loader">
+      <div class="loader__triangle triangle-spin"></div>
+    </section>
+
     <section class="cards page__section page__section_place_cards"></section>
   </main>
   <footer class="footer page__section page__section_place_footer">
@@ -43,7 +47,14 @@
           <span class="form__input-error name-input-error">Вы пропустили это поле.</span>
           <input type="text" name="activity" id="activity-input" value="" minlength="2" maxlength="200" required class="form__input form__input_type_activity" placeholder="О себе">
           <span class="form__input-error activity-input-error">Вы пропустили это поле.</span>
-          <button type="submit" name="submit" class="button button_action_submit form__button">Сохранить</button>
+          <button type="submit" name="submit" class="button button_action_submit form__button">
+            Сохранить
+            <span class="dots-loader">
+              <span class="dots-loader__dot dot-pulse">.</span>
+              <span class="dots-loader__dot dot-pulse">.</span>
+              <span class="dots-loader__dot dot-pulse">.</span>
+            </span>
+          </button>
         </fieldset>
       </form>
     </div>
@@ -57,7 +68,14 @@
           <legend class="form__title">Обновить аватар</legend>
           <input type="url" name="avatar" id="avatar-link" value="" required class="form__input form__input_type_avatar-link" placeholder="Ссылка на картинку">
           <span class="form__input-error avatar-link-error">Введите адрес сайта.</span>
-          <button type="submit" name="submit" class="button button_action_submit form__button">Сохранить</button>
+          <button type="submit" name="submit" class="button button_action_submit form__button">
+            Сохранить
+            <span class="dots-loader">
+              <span class="dots-loader__dot dot-pulse">.</span>
+              <span class="dots-loader__dot dot-pulse">.</span>
+              <span class="dots-loader__dot dot-pulse">.</span>
+            </span>
+          </button>
         </fieldset>
       </form>
     </div>
@@ -73,7 +91,14 @@
           <span class="form__input-error title-input-error">Вы пропустили это поле.</span>
           <input type="url" name="link" id="link-input" value="" required class="form__input form__input_type_link" placeholder="Ссылка на картинку">
           <span class="form__input-error link-input-error">Введите адрес сайта.</span>
-          <button type="submit" name="submit" class="button button_action_submit form__button">Создать</button>
+          <button type="submit" name="submit" class="button button_action_submit form__button">
+            Создать
+            <span class="dots-loader">
+              <span class="dots-loader__dot dot-pulse">.</span>
+              <span class="dots-loader__dot dot-pulse">.</span>
+              <span class="dots-loader__dot dot-pulse">.</span>
+            </span>
+          </button>
         </fieldset>
       </form>
     </div>
@@ -95,7 +120,14 @@
       <form class="form" name="deletion-confirm">
         <fieldset class="form__deletion-confirm">
           <legend class="form__title">Вы уверены?</legend>
-          <button type="submit" name="confirm" class="button button_action_confirm form__button form__button_position_deletion-confirm">Да</button>
+          <button type="submit" name="submit" class="button button_action_submit form__button form__button_position_deletion-confirm">
+            Да
+            <span class="dots-loader">
+              <span class="dots-loader__dot dot-pulse">.</span>
+              <span class="dots-loader__dot dot-pulse">.</span>
+              <span class="dots-loader__dot dot-pulse">.</span>
+            </span>
+          </button>
         </fieldset>
       </form>
     </div>

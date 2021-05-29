@@ -24,6 +24,7 @@
 @import url('../blocks/profile/__button/profile__button.css');
 /* cards section */
 @import url('../blocks/cards/cards.css');
+@import url('../blocks/cards/_hidden/cards__hidden.css');
 @import url('../blocks/card/card.css');
 @import url('../blocks/card/__image-wrap/card__image-wrap.css');
 @import url('../blocks/card/__image/card__image.css');
@@ -57,3 +58,12 @@
 @import url('../blocks/form/__button/form__button.css');
 @import url('../blocks/form/__button/_disabled/form__button_disabled.css');
 @import url('../blocks/form/__button/_position/form__button_position_deletion-confirm.css');
+/* loaders */
+@import url('../blocks/loader/loader.css');
+@import url('../blocks/loader/_visible/loader_visible.css');
+@import url('../blocks/loader/__triangle/loader__triangle.css');
+@import url('../blocks/triangle-spin/triangle-spin.css');
+@import url('../blocks/dots-loader/dots-loader.css');
+@import url('../blocks/dots-loader/_visible/dots-loader_visible.css');
+@import url('../blocks/dots-loader/__dot/dots-loader__dot.css');
+@import url('../blocks/dot-pulse/dot-pulse.css');

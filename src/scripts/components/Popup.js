@@ -33,4 +33,14 @@ export default class Popup {
     document.removeEventListener('click', this._handleOverlayClose);
     document.removeEventListener('keydown', this._handleEscClose);
   }
+
+  renderLoading(isLoading) {
+    const submitButton = this._popupElement.querySelector('.button_action_submit');
+
+    if (isLoading) {
+      submitButton.querySelector('.dots-loader').classList.add('dots-loader_visible');
+    } else {
+      submitButton.querySelector('.dots-loader').classList.remove('dots-loader_visible');
+    }
+  }
 }

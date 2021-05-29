@@ -51,4 +51,13 @@ const deletionConfirmConfig = {
   deletionConfirmBtn: document.querySelector('.button_action_confirm')
 }
 
-export { templateConfig, validationConfig, editPopupConfig, avatarEditPopupConfig, addPopupConfig, imagePopupConfig, deletionConfirmConfig };
+const loaderConfig = {
+  loader: document.querySelector('.loader'),
+  loaderVisibleClass: 'loader_visible',
+  cards: document.querySelector('.cards'),
+  cardsHiddenClass: 'cards_hidden',
+  dotsLoader: document.querySelector('.dots-loader'),
+  dotsLoaderVisibleClass: 'dots-loader_visible'
+}
+
+export { templateConfig, validationConfig, editPopupConfig, avatarEditPopupConfig, addPopupConfig, imagePopupConfig, deletionConfirmConfig, loaderConfig };
