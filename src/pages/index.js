@@ -26,15 +26,15 @@ const api = new Api({
 
 renderLoading(true);
 
-api.getUserInfo()
-  .then((info) => {
-    userId = info._id;
-    userInfo.setUserInfo(info);
+Promise.all([
+  api.getUserInfo(),
+  api.getInitialCards()
+])
+  .then(([userData, cards]) => {
+    userId = userData._id;
+    userInfo.setUserInfo(userData);
+    cardList.renderItems(cards);
   })
-  .catch((err) => console.log(err));
-
-api.getInitialCards()
-  .then((data) => cardList.renderItems(data))
   .catch((err) => console.log(err))
   .finally(() => renderLoading(false));
 
@@ -176,10 +176,14 @@ function openAddCardPopup() {
 function renderLoading(isLoading) {
   if (isLoading) {
     loaderConfig.loader.classList.add(loaderConfig.loaderVisibleClass);
-    loaderConfig.cards.classList.add(loaderConfig.cardsHiddenClass);
+    loaderConfig.profile.classList.add(loaderConfig.hiddenSectionClass);
+    loaderConfig.cards.classList.add(loaderConfig.hiddenSectionClass);
+    loaderConfig.footer.classList.add(loaderConfig.footerFixedClass);
   } else {
     loaderConfig.loader.classList.remove(loaderConfig.loaderVisibleClass);
-    loaderConfig.cards.classList.remove(loaderConfig.cardsHiddenClass);
+    loaderConfig.profile.classList.remove(loaderConfig.hiddenSectionClass);
+    loaderConfig.cards.classList.remove(loaderConfig.hiddenSectionClass);
+    loaderConfig.footer.classList.remove(loaderConfig.footerFixedClass);
   }
 }
 

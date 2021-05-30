@@ -14,7 +14,11 @@
     </a>
   </header>
   <main class="content">
-    <section class="profile page__section page__section_place_profile">
+    <section class="loader">
+      <div class="loader__triangle triangle-spin"></div>
+    </section>
+
+    <section class="profile page__section page__section_hidden page__section_place_profile">
       <div class="profile__avatar-wrap">
         <img src="<%=require('./images/avatar-example.jpg')%>" alt="аватар" class="profile__avatar">
         <button type="button" aria-label="Редактировать" title="Редактировать" class="button profile__avatar-edit"></button>
@@ -25,10 +29,6 @@
         <p class="profile__activity">Исследователь океана</p>
       </div>
       <button type="button" aria-label="Добавить" title="Добавить" class="button button_action_add-card profile__button"></button>
-    </section>
-
-    <section class="loader">
-      <div class="loader__triangle triangle-spin"></div>
     </section>
 
     <section class="cards page__section page__section_place_cards"></section>

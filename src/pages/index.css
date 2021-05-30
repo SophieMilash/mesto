@@ -24,7 +24,6 @@
 @import url('../blocks/profile/__button/profile__button.css');
 /* cards section */
 @import url('../blocks/cards/cards.css');
-@import url('../blocks/cards/_hidden/cards__hidden.css');
 @import url('../blocks/card/card.css');
 @import url('../blocks/card/__image-wrap/card__image-wrap.css');
 @import url('../blocks/card/__image/card__image.css');
@@ -37,6 +36,8 @@
 @import url('../blocks/card/__like-number/card__like-number.css');
 /* footer */
 @import url('../blocks/footer/__copyright/footer__copyright.css');
+@import url('../blocks/footer/_fixed/footer_fixed.css');
+@import url('../blocks/page/__section/_hidden/page__section_hidden.css');
 /* popup section */
 @import url('../blocks/popup/popup.css');
 @import url('../blocks/popup/_type/popup_type_image.css');
