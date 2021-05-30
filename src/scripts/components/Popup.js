@@ -39,8 +39,10 @@ export default class Popup {
 
     if (isLoading) {
       submitButton.querySelector('.dots-loader').classList.add('dots-loader_visible');
+      submitButton.setAttribute('disabled', true);
     } else {
       submitButton.querySelector('.dots-loader').classList.remove('dots-loader_visible');
+      submitButton.removeAttribute('disabled');
     }
   }
 }
