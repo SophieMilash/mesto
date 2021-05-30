@@ -56,8 +56,10 @@ const editProfilePopup = new PopupWithForm(editPopupConfig.editProfilePopup, {
   formSubmitHandler: (info) => {
     editProfilePopup.renderLoading(true);
     api.setUserInfo(info)
-      .then((result) => userInfo.setUserInfo(result))
-      .then(() => editProfilePopup.close())
+      .then((result) => {
+        userInfo.setUserInfo(result);
+        editProfilePopup.close();
+      })
       .catch((err) => console.log(err))
       .finally(() => editProfilePopup.renderLoading(false));
   }
@@ -68,8 +70,10 @@ const avatarEditPopup = new PopupWithForm(avatarEditPopupConfig.avatarEditPopup,
   formSubmitHandler: (data) => {
     avatarEditPopup.renderLoading(true);
     api.setAvatar(data)
-      .then((result) => userInfo.setUserInfo(result))
-      .then(() => avatarEditPopup.close())
+      .then((result) => {
+        userInfo.setUserInfo(result);
+        avatarEditPopup.close();
+      })
       .catch((err) => console.log(err))
       .finally(() => avatarEditPopup.renderLoading(false));
   }
@@ -83,8 +87,8 @@ const addCardPopup = new PopupWithForm(addPopupConfig.addCardPopup, {
       .then((result) => {
         const card = renderCard(result);
         cardList.prependItem(card);
+        addCardPopup.close();
       })
-      .then(() => addCardPopup.close())
       .catch((err) => console.log(err))
       .finally(() => addCardPopup.renderLoading(false));
   }
@@ -98,8 +102,10 @@ const deletionConfirmPopup = new PopupWithConfirmation(deletionConfirmConfig.del
   handleCardDelete: (card) => {
     deletionConfirmPopup.renderLoading(true);
     api.deleteCard(card.getCardId())
-        .then(() => card.handleDeleteCard())
-        .then(() => deletionConfirmPopup.close())
+        .then(() => {
+          card.handleDeleteCard();
+          deletionConfirmPopup.close()
+        })
         .catch((err) => console.log(err))
         .finally(() => deletionConfirmPopup.renderLoading(false));
   }
